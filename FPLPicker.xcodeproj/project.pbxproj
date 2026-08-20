@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0853FA595CC5492AEBA46768 /* GlossaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F4A2CA3BB0626CFD3FD8D2 /* GlossaryView.swift */; };
+		099ED5C624F59BD24F3CC0A7 /* TransferPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5349CB4E793E4A0410135DD /* TransferPlanner.swift */; };
+		0EF93D084261C7E1E6938814 /* FPLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F125845BDEC94FF1B784C3 /* FPLService.swift */; };
+		11C5C38DB094BDC7E750BAF7 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32CE4C7F30394370E13A008 /* PreferencesView.swift */; };
+		152D242C93A1A014E92EFD85 /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */; };
+		1BDD3975274316D4FB77D6BE /* SquadEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBD9438029EDE14A9B2583 /* SquadEditor.swift */; };
+		272A876B36CDA919C959A3CC /* ProjectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2349FD947236EABE311FD75 /* ProjectionEngine.swift */; };
+		343A8E4F63167F7C1B186948 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8A943DBDE5001C7DF45D5 /* Preferences.swift */; };
+		55ACB96C82BDF0289D689726 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14D1B40D0E9508C1377C2CF /* SettingsView.swift */; };
+		588110FFBB2B608E450C7D3B /* FPLPickerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF907660F5473FB6E2ED017A /* FPLPickerApp.swift */; };
+		7BEE9A6B3E3984A67211B6DC /* SquadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A4C00FDAE26107096AB99C /* SquadView.swift */; };
+		7C29A8D2C08B7B0F06245AB2 /* SavedTeamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDD897849F98F16182A18B4 /* SavedTeamsView.swift */; };
+		801D67F0DE145C7F2261698B /* SavedTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA79F3F0CF167385C35B2194 /* SavedTeam.swift */; };
+		859697E6BC605862D2F108C1 /* ExistingTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB578F35AFF666E2050E2C1 /* ExistingTeam.swift */; };
+		866AEFFB6768A0E3202FD0DF /* SquadShare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B533A8A082694F4F5C35E8F /* SquadShare.swift */; };
+		883D8C0A4BB915C53DDE925C /* Glossary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDED9D84DE94F1E4E190C81 /* Glossary.swift */; };
+		8B79A8C6B49303DBBB6DE6A9 /* SurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68D61133D42AB3FDA30EFE4 /* SurveyView.swift */; };
+		8CEFE52CFC8ED917F52C5ECD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0DC85DD6ECFFACBF91CFE8F /* Assets.xcassets */; };
+		BB7C27F1131991825FE8BED7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE568BD2F1E2D05501469B1 /* RootView.swift */; };
+		C2D2628146390F86E8B12A13 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4EB7B769D4F9E3249B8EE8 /* AppState.swift */; };
+		C4D760D5A0FF0F93B361EF7F /* FPLModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A834F989A28EF529EEF093C /* FPLModels.swift */; };
+		CD2D2E04BAD5698C99E29F0F /* SquadOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9DA24D0F9206E0AE37942 /* SquadOptimizer.swift */; };
+		D2E5D1BB7DBCC7D1DBC5788C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9806D1F6B14670E283BBF33B /* AppSettings.swift */; };
+		DC1353CA12DBA051AA7B4153 /* ImportTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7DBBB5401210B7C8E667 /* ImportTeamView.swift */; };
+		DE093F569671BA846DF495E6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83F8EAE64D2E0CD618AF9C /* Theme.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
+		1A834F989A28EF529EEF093C /* FPLModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPLModels.swift; sourceTree = "<group>"; };
+		34A4C00FDAE26107096AB99C /* SquadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadView.swift; sourceTree = "<group>"; };
+		3FE9DA24D0F9206E0AE37942 /* SquadOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadOptimizer.swift; sourceTree = "<group>"; };
+		4E83F8EAE64D2E0CD618AF9C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		4FD8A943DBDE5001C7DF45D5 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		5EAA7DBBB5401210B7C8E667 /* ImportTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTeamView.swift; sourceTree = "<group>"; };
+		691A5B57D36C11252387F6DE /* FPLPicker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FPLPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		69FBD9438029EDE14A9B2583 /* SquadEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadEditor.swift; sourceTree = "<group>"; };
+		6EE568BD2F1E2D05501469B1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		71F125845BDEC94FF1B784C3 /* FPLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPLService.swift; sourceTree = "<group>"; };
+		7BB578F35AFF666E2050E2C1 /* ExistingTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTeam.swift; sourceTree = "<group>"; };
+		7CDED9D84DE94F1E4E190C81 /* Glossary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glossary.swift; sourceTree = "<group>"; };
+		8B533A8A082694F4F5C35E8F /* SquadShare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadShare.swift; sourceTree = "<group>"; };
+		91F4A2CA3BB0626CFD3FD8D2 /* GlossaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryView.swift; sourceTree = "<group>"; };
+		9806D1F6B14670E283BBF33B /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		A14D1B40D0E9508C1377C2CF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C0DC85DD6ECFFACBF91CFE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C32CE4C7F30394370E13A008 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		C68D61133D42AB3FDA30EFE4 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
+		CA79F3F0CF167385C35B2194 /* SavedTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTeam.swift; sourceTree = "<group>"; };
+		D2349FD947236EABE311FD75 /* ProjectionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionEngine.swift; sourceTree = "<group>"; };
+		D5349CB4E793E4A0410135DD /* TransferPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferPlanner.swift; sourceTree = "<group>"; };
+		DC4EB7B769D4F9E3249B8EE8 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		ECDD897849F98F16182A18B4 /* SavedTeamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTeamsView.swift; sourceTree = "<group>"; };
+		EF907660F5473FB6E2ED017A /* FPLPickerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPLPickerApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		13E1E505AFFA0F6F07C604A6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9806D1F6B14670E283BBF33B /* AppSettings.swift */,
+				7BB578F35AFF666E2050E2C1 /* ExistingTeam.swift */,
+				1A834F989A28EF529EEF093C /* FPLModels.swift */,
+				7CDED9D84DE94F1E4E190C81 /* Glossary.swift */,
+				4FD8A943DBDE5001C7DF45D5 /* Preferences.swift */,
+				CA79F3F0CF167385C35B2194 /* SavedTeam.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5D19906D074C3E03C178BC96 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DC4EB7B769D4F9E3249B8EE8 /* AppState.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5D2D58C7FC719FCDC0ED7DB1 = {
+			isa = PBXGroup;
+			children = (
+				B8DB065463A28E00D3975FD7 /* Sources */,
+				97D2C5A4134FEF92F054BD34 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8B775C2769E6EB369CB97C5D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				71F125845BDEC94FF1B784C3 /* FPLService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		97D2C5A4134FEF92F054BD34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				691A5B57D36C11252387F6DE /* FPLPicker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B8DB065463A28E00D3975FD7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C0DC85DD6ECFFACBF91CFE8F /* Assets.xcassets */,
+				EF907660F5473FB6E2ED017A /* FPLPickerApp.swift */,
+				C76B0D0D99183CD193611C66 /* Engine */,
+				13E1E505AFFA0F6F07C604A6 /* Models */,
+				8B775C2769E6EB369CB97C5D /* Services */,
+				5D19906D074C3E03C178BC96 /* ViewModels */,
+				D1A9DB2512D79665C9A09919 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C76B0D0D99183CD193611C66 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				D2349FD947236EABE311FD75 /* ProjectionEngine.swift */,
+				69FBD9438029EDE14A9B2583 /* SquadEditor.swift */,
+				3FE9DA24D0F9206E0AE37942 /* SquadOptimizer.swift */,
+				D5349CB4E793E4A0410135DD /* TransferPlanner.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		D1A9DB2512D79665C9A09919 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				91F4A2CA3BB0626CFD3FD8D2 /* GlossaryView.swift */,
+				5EAA7DBBB5401210B7C8E667 /* ImportTeamView.swift */,
+				0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */,
+				C32CE4C7F30394370E13A008 /* PreferencesView.swift */,
+				6EE568BD2F1E2D05501469B1 /* RootView.swift */,
+				ECDD897849F98F16182A18B4 /* SavedTeamsView.swift */,
+				A14D1B40D0E9508C1377C2CF /* SettingsView.swift */,
+				8B533A8A082694F4F5C35E8F /* SquadShare.swift */,
+				34A4C00FDAE26107096AB99C /* SquadView.swift */,
+				C68D61133D42AB3FDA30EFE4 /* SurveyView.swift */,
+				4E83F8EAE64D2E0CD618AF9C /* Theme.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		128F115C525EBE0420BFE99F /* FPLPicker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C7E8CBF38E3E03516029BF7 /* Build configuration list for PBXNativeTarget "FPLPicker" */;
+			buildPhases = (
+				F498C7D41011AD7F06D905BD /* Sources */,
+				2F68A570AB54152FDDF58CB8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FPLPicker;
+			packageProductDependencies = (
+			);
+			productName = FPLPicker;
+			productReference = 691A5B57D36C11252387F6DE /* FPLPicker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F35E6DA611E595DDA81F1F67 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = E2A6F1CF4E2A9B4D839650BC /* Build configuration list for PBXProject "FPLPicker" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5D2D58C7FC719FCDC0ED7DB1;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 97D2C5A4134FEF92F054BD34 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				128F115C525EBE0420BFE99F /* FPLPicker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2F68A570AB54152FDDF58CB8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CEFE52CFC8ED917F52C5ECD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F498C7D41011AD7F06D905BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2E5D1BB7DBCC7D1DBC5788C /* AppSettings.swift in Sources */,
+				C2D2628146390F86E8B12A13 /* AppState.swift in Sources */,
+				859697E6BC605862D2F108C1 /* ExistingTeam.swift in Sources */,
+				C4D760D5A0FF0F93B361EF7F /* FPLModels.swift in Sources */,
+				588110FFBB2B608E450C7D3B /* FPLPickerApp.swift in Sources */,
+				0EF93D084261C7E1E6938814 /* FPLService.swift in Sources */,
+				883D8C0A4BB915C53DDE925C /* Glossary.swift in Sources */,
+				0853FA595CC5492AEBA46768 /* GlossaryView.swift in Sources */,
+				DC1353CA12DBA051AA7B4153 /* ImportTeamView.swift in Sources */,
+				152D242C93A1A014E92EFD85 /* PlayerDetailView.swift in Sources */,
+				343A8E4F63167F7C1B186948 /* Preferences.swift in Sources */,
+				11C5C38DB094BDC7E750BAF7 /* PreferencesView.swift in Sources */,
+				272A876B36CDA919C959A3CC /* ProjectionEngine.swift in Sources */,
+				BB7C27F1131991825FE8BED7 /* RootView.swift in Sources */,
+				801D67F0DE145C7F2261698B /* SavedTeam.swift in Sources */,
+				7C29A8D2C08B7B0F06245AB2 /* SavedTeamsView.swift in Sources */,
+				55ACB96C82BDF0289D689726 /* SettingsView.swift in Sources */,
+				1BDD3975274316D4FB77D6BE /* SquadEditor.swift in Sources */,
+				CD2D2E04BAD5698C99E29F0F /* SquadOptimizer.swift in Sources */,
+				866AEFFB6768A0E3202FD0DF /* SquadShare.swift in Sources */,
+				7BEE9A6B3E3984A67211B6DC /* SquadView.swift in Sources */,
+				8B79A8C6B49303DBBB6DE6A9 /* SurveyView.swift in Sources */,
+				DE093F569671BA846DF495E6 /* Theme.swift in Sources */,
+				099ED5C624F59BD24F3CC0A7 /* TransferPlanner.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4A87D0CB89972ADAD8DDFF0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "FPL Picker";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fplpicker.app;
+				PRODUCT_NAME = "FPL Picker";
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		94C7A426E36224FA182C93DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CB2BD5278F9BE8A5B57F5E39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "FPL Picker";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fplpicker.app;
+				PRODUCT_NAME = "FPL Picker";
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E3F29703F5C2E2C759C9EADB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7C7E8CBF38E3E03516029BF7 /* Build configuration list for PBXNativeTarget "FPLPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB2BD5278F9BE8A5B57F5E39 /* Debug */,
+				4A87D0CB89972ADAD8DDFF0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E2A6F1CF4E2A9B4D839650BC /* Build configuration list for PBXProject "FPLPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94C7A426E36224FA182C93DB /* Debug */,
+				E3F29703F5C2E2C759C9EADB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F35E6DA611E595DDA81F1F67 /* Project object */;
+}
