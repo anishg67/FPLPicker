@@ -24,6 +24,16 @@ xcodegen generate
 
 Requires iOS 17+ and a network connection — all data is fetched live.
 
+## App Store submission notes
+
+- `ITSAppUsesNonExemptEncryption` is set to `false` in the generated Info.plist
+  (via `INFOPLIST_KEY_ITSAppUsesNonExemptEncryption` in `project.yml`), so App
+  Store Connect stops asking the export-compliance question on every upload. The
+  app uses no encryption beyond the HTTPS that the operating system provides,
+  which is exempt.
+- The App Privacy questionnaire can be answered **Data Not Collected** — see
+  [PRIVACY.md](PRIVACY.md).
+
 ## How it works
 
 ### 1. The survey
