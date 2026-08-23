@@ -27,6 +27,10 @@ struct RatedPlayer: Identifiable, Hashable {
 /// underlying per-90 numbers (xG/xA, clean sheet and save rates) — then scales
 /// the result by fixture difficulty, minutes security and injury status.
 struct ProjectionEngine {
+    /// How many full matches of evidence it takes before a player's own scoring
+    /// outweighs the prior. Higher = more conservative early in a season.
+    static let priorStrength = 5.0
+
     let data: LeagueData
     let prefs: Preferences
 
@@ -82,6 +86,7 @@ struct ProjectionEngine {
         var reasons: [String] = []
 
         // 1. Scoring rate ------------------------------------------------------
+        // What the player has actually produced so far this season.
         let perGame = element.pointsPerGame.value
         let per90 = element.minutes >= 270
             ? Double(element.totalPoints) / (Double(element.minutes) / 90.0)
@@ -91,16 +96,27 @@ struct ProjectionEngine {
         let formRate = element.form.value
         let hasForm = formRate > 0
         let formWeight = hasForm ? max(0, min(1, prefs.formWeight)) : 0
-        var base = formWeight * formRate + (1 - formWeight) * seasonRate
-
-        // FPL publishes its own expected points for the next gameweek; use it as
-        // a third anchor when it is present.
-        let epNext = element.epNext.value
-        if epNext > 0 { base = 0.72 * base + 0.28 * epNext }
+        var observed = formWeight * formRate + (1 - formWeight) * seasonRate
 
         // Underlying numbers catch players whose returns haven't landed yet.
         let underlying = underlyingRate(element)
-        if underlying > 0 { base = 0.75 * base + 0.25 * underlying }
+        if underlying > 0 { observed = 0.75 * observed + 0.25 * underlying }
+
+        // What to expect of the player before this season's sample means
+        // anything. FPL's own expected points for the next gameweek is already
+        // regressed and exists even for players yet to kick a ball; price is the
+        // fallback, since the market prices quality in.
+        let epNext = element.epNext.value
+        let prior = epNext > 0 ? epNext : (1.5 + max(0, element.price - 4.0) * 0.22)
+
+        // Shrink the observed rate toward that prior by how much football we
+        // have actually seen from this player. One match is weak evidence — it
+        // makes a 14-point cameo look like a 14-point-per-week striker, and a
+        // £15m forward who hasn't played yet look worthless. As minutes pile up
+        // the prior fades on its own, so no early-season special case is needed.
+        let ninetiesPlayed = Double(element.minutes) / 90.0
+        let reliability = ninetiesPlayed / (ninetiesPlayed + Self.priorStrength)
+        var base = reliability * observed + (1 - reliability) * prior
 
         // Nudge for penalty duty — the single biggest source of cheap points.
         if let order = element.penaltiesOrder, order == 1, element.position != .goalkeeper {
@@ -124,10 +140,18 @@ struct ProjectionEngine {
 
         // 3. Minutes security ---------------------------------------------------
         let minutesShare = min(1.0, Double(element.minutes) / maxMinutes)
+        // The same small-sample problem: after one round a single start makes a
+        // squad player look nailed, and a rested regular look dropped. Trust the
+        // ratio more as the season's matches accumulate.
+        let leagueNineties = maxMinutes / 90.0
+        let minutesConfidence = leagueNineties / (leagueNineties + 3.0)
+        let trustedShare = minutesConfidence * minutesShare + (1 - minutesConfidence) * 0.75
         let strictness = prefs.avoidInjuryRisk ? 0.45 : 0.25
-        let minutesFactor = (1 - strictness) + strictness * minutesShare
-        if minutesShare > 0.85 { reasons.append("Nailed starter") }
-        else if minutesShare < 0.35 && element.minutes > 0 { reasons.append("Rotation risk") }
+        let minutesFactor = (1 - strictness) + strictness * trustedShare
+        if minutesConfidence > 0.5 {
+            if minutesShare > 0.85 { reasons.append("Nailed starter") }
+            else if minutesShare < 0.35 && element.minutes > 0 { reasons.append("Rotation risk") }
+        }
 
         // 4. Availability -------------------------------------------------------
         let availability = element.availability
@@ -157,7 +181,9 @@ struct ProjectionEngine {
         let projected = max(0, base * fixtureMultiplier * minutesFactor
                             * availabilityFactor * riskFactor * teamBias)
 
-        if formRate >= 6 { reasons.insert("Hot form (\(String(format: "%.1f", formRate)))", at: 0) }
+        if formRate >= 6 && reliability > 0.3 {
+            reasons.insert("Hot form (\(String(format: "%.1f", formRate)))", at: 0)
+        }
         if element.priceTenths <= 45 && projected >= 2.6 { reasons.append("Great value at \(formatPrice(tenths: element.priceTenths))") }
 
         return RatedPlayer(

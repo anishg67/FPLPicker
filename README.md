@@ -100,12 +100,18 @@ accepts either.
 `ProjectionEngine` scores every player as expected points per gameweek:
 
 - **Scoring rate** — a blend of recent form, season-long points per game and
-  points per 90, anchored against FPL's own `ep_next`
+  points per 90, then shrunk toward a prior by how many minutes the player has
+  actually played. The prior is FPL's own `ep_next` (already regressed, and
+  present even for players yet to feature), falling back to a price-based
+  baseline. Without this, one gameweek of data makes a 14-point cameo look like
+  a 14-point-per-week striker and a £15m forward who hasn't played look
+  worthless; the shrinkage fades on its own as minutes accumulate
 - **Underlying stats** — xG/xA per 90, clean-sheet and save rates, weighted by
   position, so players due a return aren't overlooked
 - **Fixtures** — average difficulty over the next N gameweeks, plus double and
   blank gameweek adjustments
-- **Minutes security** — share of available minutes played
+- **Minutes security** — share of available minutes played, itself trusted more
+  as the season's matches accumulate
 - **Availability** — injury, suspension and doubt status
 - **Risk appetite** — rewards low ownership (differentials) or high ownership
   (the template), depending on the dial
@@ -124,6 +130,10 @@ accepts either.
   bench fodder therefore falls out naturally rather than being hardcoded
 - Must-have players are locked; blocklisted players never enter the pool
 - A fixed seed keeps results reproducible for identical inputs
+
+The captain and vice are chosen from outfield players only — a goalkeeper's
+ceiling sits far below an attacker's even when the projections are close, which
+they are early in a season.
 
 The result screen shows the pitch, formation, captain and vice, bench in
 substitution order, spend, projected points and the reasoning behind each pick.

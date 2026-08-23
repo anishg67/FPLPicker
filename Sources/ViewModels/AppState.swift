@@ -191,9 +191,9 @@ final class AppState: ObservableObject {
 
         let evaluation = SquadOptimizer.evaluate(players)
         let cost = players.reduce(0) { $0 + $1.priceTenths }
-        let vice = evaluation.starting
-            .filter { $0.id != evaluation.captain.id }
-            .max(by: { $0.projected < $1.projected }) ?? evaluation.captain
+        let vice = SquadOptimizer.bestCaptain(in: evaluation.starting,
+                                              excluding: evaluation.captain.id)
+            ?? evaluation.captain
 
         var notes: [String] = []
         if let name = team.teamName { notes.append("Imported from “\(name)”.") }

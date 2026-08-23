@@ -114,9 +114,7 @@ struct SquadOptimizer {
                 : lhs.position.rawValue < rhs.position.rawValue
         }
         let captain = evaluation.captain
-        let vice = evaluation.starting
-            .filter { $0.id != captain.id }
-            .max(by: { $0.projected < $1.projected }) ?? captain
+        let vice = Self.bestCaptain(in: evaluation.starting, excluding: captain.id) ?? captain
 
         // Bench order: goalkeeper always sits at slot 0, then most likely to
         // deliver if someone doesn't play.
@@ -327,6 +325,19 @@ struct SquadOptimizer {
         var formation: String
     }
 
+    /// The player who should wear the armband. Goalkeepers are excluded: their
+    /// ceiling is far below an attacker's even when the projections sit close
+    /// together, which they do early in a season.
+    /// - Parameter excluding: id to skip, used to pick the vice after the captain.
+    static func bestCaptain(in starting: [RatedPlayer], excluding excluded: Int? = nil) -> RatedPlayer? {
+        var best: RatedPlayer?
+        for player in starting where player.position != .goalkeeper && player.id != excluded {
+            if best == nil || player.projected > best!.projected { best = player }
+        }
+        if let best { return best }
+        return starting.filter { $0.id != excluded }.max(by: { $0.projected < $1.projected })
+    }
+
     /// Picks the best legal XI out of the 15 and scores the squad.
     static func evaluate(_ squad: [RatedPlayer]) -> Evaluation {
         var byPosition: [Position: [RatedPlayer]] = [:]
@@ -376,7 +387,7 @@ struct SquadOptimizer {
 
         let startingSum = starting.reduce(0) { $0 + $1.projected }
         let benchSum = bench.reduce(0) { $0 + $1.projected }
-        let captain = starting.max(by: { $0.projected < $1.projected }) ?? squad[0]
+        let captain = bestCaptain(in: starting) ?? squad[0]
 
         return Evaluation(
             score: startingSum + captain.projected + benchWeight * benchSum,

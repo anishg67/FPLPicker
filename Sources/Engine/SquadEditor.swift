@@ -140,9 +140,9 @@ enum SquadEditor {
             + evaluation.bench.filter { $0.position != .goalkeeper }
                 .sorted { $0.projected > $1.projected }
         next.captain = evaluation.captain
-        next.viceCaptain = evaluation.starting
-            .filter { $0.id != evaluation.captain.id }
-            .max(by: { $0.projected < $1.projected }) ?? evaluation.captain
+        next.viceCaptain = SquadOptimizer.bestCaptain(in: evaluation.starting,
+                                                      excluding: evaluation.captain.id)
+            ?? evaluation.captain
         return rebuilt(next)
     }
 
@@ -160,13 +160,13 @@ enum SquadEditor {
         next.totalCostTenths = squad.squad.reduce(0) { $0 + $1.priceTenths }
 
         if !next.starting.contains(where: { $0.id == next.captain.id }) {
-            next.captain = next.starting.max(by: { $0.projected < $1.projected }) ?? next.captain
+            next.captain = SquadOptimizer.bestCaptain(in: next.starting) ?? next.captain
         }
         if !next.starting.contains(where: { $0.id == next.viceCaptain.id })
             || next.viceCaptain.id == next.captain.id {
-            next.viceCaptain = next.starting
-                .filter { $0.id != next.captain.id }
-                .max(by: { $0.projected < $1.projected }) ?? next.captain
+            next.viceCaptain = SquadOptimizer.bestCaptain(in: next.starting,
+                                                          excluding: next.captain.id)
+                ?? next.captain
         }
 
         let defenders = next.starting.filter { $0.position == .defender }.count

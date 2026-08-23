@@ -679,12 +679,18 @@ struct StatTile: View {
             Text(title.uppercased())
                 .font(.system(size: 9, weight: .bold))
                 .foregroundStyle(.white.opacity(0.55))
+            // "£100.0m" is a hair too wide for a third of a 375pt screen, so
+            // shrink rather than wrap onto a second line.
             Text(value)
                 .font(.title3.bold().monospacedDigit())
                 .foregroundStyle(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
             Text(detail)
                 .font(.caption2)
                 .foregroundStyle(.white.opacity(0.55))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .card(padding: 12)
