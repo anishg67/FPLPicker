@@ -1,0 +1,32 @@
+REGULATED INDUSTRY
+
+FPL Picker does not operate in a regulated industry. It is a planning and
+analysis tool for Fantasy Premier League, a free-to-play game run by the
+Premier League. The app takes no entries, holds no funds, processes no
+payments, awards no prizes and offers no wagering or real-money gaming of any
+kind. There is no gambling, lottery or contest functionality, so the licensing
+requirements that apply to real-money fantasy sports do not apply here.
+
+The app also collects no personal data, requires no account, and has no
+in-app purchases, so no financial, health or children's-data regulation is
+engaged.
+
+THIRD-PARTY MATERIAL
+
+The app displays publicly available Fantasy Premier League game data: player
+names, in-game prices, match statistics, injury status and fixture difficulty
+ratings. This is retrieved at runtime from the Premier League's own public API
+(fantasy.premierleague.com/api), which requires no key, account, agreement or
+authentication to access. Data is read only; nothing is written back.
+
+The developer holds no licence from, and claims no affiliation with, the
+Premier League or Fantasy Premier League. The app states this explicitly in
+three places: its App Store description, its in-app Settings screen, and its
+privacy policy.
+
+The app does NOT use:
+- club crests, badges or logos (clubs are shown as plain coloured circles with
+  their three-letter abbreviations)
+- Premier League or Fantasy Premier League logos, wordmarks or branding
+- match footage, broadcast content or audio
+- any user-generated content

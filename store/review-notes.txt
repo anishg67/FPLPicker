@@ -1,0 +1,32 @@
+NO SIGN-IN REQUIRED
+The app has no accounts, no login and no paid content. Every feature is available immediately on first launch. No demo credentials or sample files are needed.
+
+REQUIREMENTS
+An internet connection. All data is read from the public Fantasy Premier League API (fantasy.premierleague.com/api), which needs no key or sign-in. iPhone, portrait orientation.
+
+HOW TO REACH EACH FEATURE
+
+1) FIRST LAUNCH — a six-question survey appears. Any answers are fine.
+   - Question 1 sets the flow. Choose "No, I'm starting from scratch" for the quickest path.
+   - Question 6 sets how many controls are shown. Choose "Nothing — just hand me a team" for the simplest mode, or "Everything" to see all advanced options.
+   - Tap Continue.
+
+2) BUILD A SQUAD — tap "Build my team". Within a few seconds the app shows a complete, legal 15-player squad: starting XI on the pitch, formation, captain (C), vice-captain (V) and bench.
+
+3) ON THE SQUAD SCREEN
+   - Tap any player on the pitch or bench to open them. Actions: Make captain, Make vice, Bench / Bring on, and Replace (opens a transfer market for that position).
+   - Save — stores the team on the device. My teams — reopens saved teams. Share — exports the squad as an image or as text.
+   - Gear icon (top right) — Settings: colour themes, card detail, default budget, live-data refresh, the glossary, and options to delete stored data.
+   - Change inputs — returns to the setup screen. The mode chip at the top right switches between Do It For Me, Guided and Full Control.
+
+4) WORKING FROM AN EXISTING TEAM — from the setup screen, tap "I already have a team".
+   - "Team ID" imports a real Fantasy Premier League squad by its public team ID. A working sample ID is: 1
+     Enter 1, tap Find, then "Use this team". The app loads that squad and suggests transfers.
+   - "Pick by hand" is the alternative: add 15 players (2 goalkeepers, 5 defenders, 5 midfielders, 3 forwards), set the bank and free transfers, then "Use this team".
+   - Note: Fantasy Premier League only publishes squads once a gameweek is under way. In the closed season the import returns no squad and the app shows a message directing the user to enter their team by hand. That message is expected behaviour, not an error.
+
+PRIVACY
+The app collects no data and has no analytics or advertising. Survey answers, preferences and saved teams are stored only on the device and can be erased in Settings > Stored data. Nothing is uploaded.
+
+THIRD-PARTY CONTENT
+Player names, prices, statistics and photographs come from the public Fantasy Premier League API. The app is unofficial and states so in its Settings screen, its App Store description and its privacy policy.
