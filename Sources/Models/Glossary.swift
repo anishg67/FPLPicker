@@ -39,7 +39,7 @@ enum Glossary {
         GlossaryTerm(
             term: "FDR",
             short: "fixture difficulty rating",
-            definition: "FPL's 1-to-5 score for how hard each upcoming match is. 1 and 2 are kind fixtures, 4 and 5 are tough ones. This app averages it over the next few gameweeks.",
+            definition: "The game's 1-to-5 score for how hard each upcoming match is. 1 and 2 are kind fixtures, 4 and 5 are tough ones. This app averages it over the next few gameweeks.",
             example: "A defence averaging 2.1 FDR has an easy run and is more likely to keep clean sheets."
         ),
         GlossaryTerm(
@@ -57,7 +57,7 @@ enum Glossary {
         GlossaryTerm(
             term: "Ownership",
             short: "selected by percent",
-            definition: "The share of all FPL managers who own a player. High ownership means everyone has them, so they protect your rank rather than improve it.",
+            definition: "The share of all managers who own a player. High ownership means everyone has them, so they protect your rank rather than improve it.",
             example: "A 70%-owned striker who blanks costs you nothing relative to the field. Missing him when he hauls is what hurts."
         ),
         GlossaryTerm(

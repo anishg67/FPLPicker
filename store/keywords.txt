@@ -1,1 +1,1 @@
-premier,league,epl,soccer,transfers,captain,lineup,optimiser,stats,xg,fixtures,points,manager,tips
+soccer,transfers,captain,lineup,optimiser,optimizer,stats,xg,fixtures,points,manager,formation,tips

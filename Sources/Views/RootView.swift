@@ -7,11 +7,11 @@ struct RootView: View {
         Group {
             switch state.phase {
             case .loading:
-                StatusView(title: "Pulling live FPL data",
+                StatusView(title: "Pulling live player data",
                            subtitle: "Prices, form and the fixture list, straight from the game.",
                            spinning: true)
             case .failed(let message):
-                StatusView(title: "Couldn't reach Fantasy Premier League",
+                StatusView(title: "Couldn't reach the data feed",
                            subtitle: message,
                            spinning: false) {
                     Button("Try again") { state.retry() }

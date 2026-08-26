@@ -20,13 +20,13 @@ enum FPLServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .badStatus(let code):
-            return "The Fantasy Premier League server replied with status \(code)."
+            return "The data server replied with status \(code)."
         case .transport(let message):
             return message
         case .unknownTeamID(let id):
-            return "FPL doesn't have a team with the ID \(id). It's the number in the URL when you view your own team on the FPL site."
+            return "No team was found with the ID \(id). It's the number in the address bar when you view your own team on the web."
         case .seasonNotStarted:
-            return "The season hasn't kicked off yet, so FPL isn't publishing squads through its API. Enter your 15 by hand instead — it takes a minute."
+            return "The season hasn't kicked off yet, so squads aren't published yet. Enter your 15 by hand instead — it takes a minute."
         }
     }
 }
@@ -151,7 +151,7 @@ struct FPLService {
         } catch let error as FPLServiceError {
             throw error
         } catch let error as DecodingError {
-            throw FPLServiceError.transport("Couldn't read the FPL data: \(error)")
+            throw FPLServiceError.transport("Couldn't read the player data: \(error)")
         } catch {
             throw FPLServiceError.transport(error.localizedDescription)
         }

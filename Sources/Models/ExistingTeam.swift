@@ -20,7 +20,7 @@ enum TeamStatus: String, Codable, CaseIterable, Identifiable {
     var detail: String {
         switch self {
         case .none: return "Build me a whole squad from nothing"
-        case .importByID: return "Pull my current squad, bank and value straight from FPL"
+        case .importByID: return "Pull my current squad, bank and value straight from the game"
         case .manual: return "Pick my players, then tell you my bank and free transfers"
         }
     }

@@ -153,7 +153,7 @@ struct SettingsView: View {
                     in: 800...1200, step: 5
                 )
                 .tint(Theme.mint)
-                Text("Used when the app picks a squad without being told a budget. FPL starts everyone at £100.0m.")
+                Text("Used when the app picks a squad without being told a budget. Most fantasy teams start at £100.0m.")
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.55))
             }
@@ -186,7 +186,7 @@ struct SettingsView: View {
 
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Live FPL data")
+                    Text("Live player data")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(.white)
                     Text(state.dataAgeDescription ?? "Not loaded")
@@ -213,7 +213,7 @@ struct SettingsView: View {
                 .buttonStyle(.plain)
             }
 
-            Text("Prices, form, injuries and fixture difficulty come straight from the Fantasy Premier League API. Refreshing re-prices the squad on screen without changing your picks.")
+            Text("Prices, form, injuries and fixture difficulty come straight from the game's public data feed. Refreshing re-prices the squad on screen without changing your picks.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.55))
                 .fixedSize(horizontal: false, vertical: true)
@@ -253,7 +253,7 @@ struct SettingsView: View {
                 Spacer()
                 Text(appVersion).font(.caption.monospacedDigit()).foregroundStyle(.white.opacity(0.7))
             }
-            Text("Unofficial. Not affiliated with the Premier League or Fantasy Premier League.")
+            Text("Unofficial and independent. Not affiliated with any football competition, club or fantasy game provider.")
                 .font(.caption2)
                 .foregroundStyle(.white.opacity(0.4))
         }
@@ -308,7 +308,7 @@ struct SettingsView: View {
             Text("by Anish Gupta")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Theme.mint)
-            Text("FPL Picker")
+            Text("Squad Picker")
                 .font(.caption2)
                 .foregroundStyle(.white.opacity(0.4))
         }

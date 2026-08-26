@@ -118,7 +118,7 @@ struct ImportTeamView: View {
 
     private var idCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("FPL team ID").font(.headline).foregroundStyle(.white)
+            Text("Your team ID").font(.headline).foregroundStyle(.white)
             Text("Open your team on the FPL site or app — the number in the address, like fantasy.premierleague.com/entry/**1234567**/event/1.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.55))
@@ -169,7 +169,7 @@ struct ImportTeamView: View {
                 .background(RoundedRectangle(cornerRadius: 12).fill(.white.opacity(0.08)))
             }
 
-            Text("Before the season kicks off FPL doesn't publish squads, so importing only works once gameweek 1 has started. Pick by hand until then.")
+            Text("Before the season kicks off, squads aren't published, so importing only works once gameweek 1 has started. Pick by hand until then.")
                 .font(.caption2)
                 .foregroundStyle(.white.opacity(0.45))
                 .fixedSize(horizontal: false, vertical: true)
@@ -267,7 +267,7 @@ struct ImportTeamView: View {
                     }
                 }
                 .tint(Theme.mint)
-                Text("Swaps you can make without paying 4 points. FPL doesn't publish this, so check your own team and set it here.")
+                Text("Swaps you can make without paying 4 points. It isn't published anywhere, so check your own team and set it here.")
                     .font(.caption).foregroundStyle(.white.opacity(0.55))
             }
         }

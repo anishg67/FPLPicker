@@ -29,13 +29,13 @@ enum SurveyContent {
         SurveyQuestion(
             id: 0,
             kind: .teamStatus,
-            prompt: "Do you already have a Fantasy Premier League team?",
+            prompt: "Do you already have a fantasy football team?",
             subtitle: "If you do, I'll work from your real squad — your players, your bank, your free transfers — and suggest changes. If not, I'll build you one from nothing.",
             options: [
                 .init(text: "No, I'm starting from scratch",
                       detail: "Build me a whole squad", score: 0),
                 .init(text: "Yes — import it with my team ID",
-                      detail: "I'll pull your squad, bank and squad value straight from FPL", score: 0),
+                      detail: "I'll pull your squad, bank and squad value straight from the game", score: 0),
                 .init(text: "Yes — I'll enter my 15 by hand",
                       detail: "Pick your players, then tell me your bank and free transfers", score: 0)
             ]
@@ -43,7 +43,7 @@ enum SurveyContent {
         SurveyQuestion(
             id: 1,
             kind: .knowledge,
-            prompt: "How much Premier League football do you actually watch?",
+            prompt: "How much top-flight football do you actually watch?",
             subtitle: "No wrong answer — this just sets how much I explain.",
             options: [
                 .init(text: "Basically none", detail: "I know the sport exists", score: 0),
@@ -55,7 +55,7 @@ enum SurveyContent {
         SurveyQuestion(
             id: 2,
             kind: .knowledge,
-            prompt: "How long have you been playing Fantasy Premier League?",
+            prompt: "How long have you been playing fantasy football?",
             subtitle: "The game where you pick 15 players under a £100m budget.",
             options: [
                 .init(text: "This is my first time", detail: nil, score: 0),
@@ -67,7 +67,7 @@ enum SurveyContent {
         SurveyQuestion(
             id: 3,
             kind: .knowledge,
-            prompt: "How much of the FPL stats language do you already speak?",
+            prompt: "How much of the fantasy stats language do you already speak?",
             subtitle: "Pick the line that sounds familiar. Every term is explained below, and you can read the full list any time.",
             showsGlossary: true,
             options: [

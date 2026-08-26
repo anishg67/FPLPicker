@@ -84,7 +84,7 @@ struct PreferencesView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("FPL Picker")
+                    Text("Squad Picker")
                         .font(.largeTitle.bold())
                         .foregroundStyle(.white)
                     if let deadline = state.nextDeadline {
@@ -197,7 +197,7 @@ struct PreferencesView: View {
     private var autoBullets: [String] {
         [
             "Spend the standard £100.0m budget across 15 players.",
-            "Respect every FPL rule: 2 keepers, 5 defenders, 5 midfielders, 3 forwards, max 3 from any one club.",
+            "Respect every squad rule: 2 keepers, 5 defenders, 5 midfielders, 3 forwards, max 3 from any one club.",
             "Weigh form, season-long returns, underlying stats and the next 5 gameweeks of fixtures.",
             "Pick your best starting XI, formation, captain and bench order."
         ]
@@ -222,7 +222,7 @@ struct PreferencesView: View {
                 in: 800...1200, step: 5
             )
             .tint(Theme.mint)
-            Text("New FPL teams start with £100.0m. Set it lower for a challenge, or higher if your squad value has grown.")
+            Text("New teams start with £100.0m. Set it lower for a challenge, or higher if your squad value has grown.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.55))
         }
@@ -334,7 +334,7 @@ struct PreferencesView: View {
                     }
                 }
                 .tint(Theme.mint)
-                Text("FPL's own limit is 3. Lower it to spread risk across more clubs.")
+                Text("The game's own limit is 3. Lower it to spread risk across more clubs.")
                     .font(.caption).foregroundStyle(.white.opacity(0.55))
             }
 

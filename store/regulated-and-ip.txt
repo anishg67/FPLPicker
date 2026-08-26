@@ -1,6 +1,6 @@
 REGULATED INDUSTRY
 
-FPL Picker does not operate in a regulated industry. It is a planning and
+Squad Picker does not operate in a regulated industry. It is a planning and
 analysis tool for Fantasy Premier League, a free-to-play game run by the
 Premier League. The app takes no entries, holds no funds, processes no
 payments, awards no prizes and offers no wagering or real-money gaming of any
