@@ -21,7 +21,7 @@ fields too and repeats waste the 100 characters.
 
 Apple rejected the first submission under Guideline 5.2.1: the metadata
 referenced Fantasy Premier League without authorisation. The app was renamed
-from "FPL Picker" to "Fantasy Picker", and "premier", "league" and
+from "FPL Picker" to "Squad Picker Pro", and "premier", "league" and
 "epl" were removed from the keywords and the description. No public-facing
 metadata now names a league, competition or fantasy provider, and "FPL" no
 longer appears in the app name. Do not reintroduce those terms without a
