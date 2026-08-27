@@ -1,4 +1,4 @@
-Fantasy football asks you to fill 15 squad places from hundreds of players, under a fixed budget and strict squad rules. Fantasy Squad Picker does the hard part.
+Fantasy football asks you to fill 15 squad places from hundreds of players, under a fixed budget and strict squad rules. Squad Picker does the hard part.
 
 A FULL SQUAD IN SECONDS
 Tap once for a complete, legal squad: 2 goalkeepers, 5 defenders, 5 midfielders, 3 forwards, never more than 3 from one club, and the budget put to work. Your starting XI, formation, captain, vice-captain and bench order come with it.
@@ -24,4 +24,4 @@ ALSO INCLUDED
 • Five colour themes and adjustable card detail
 • No account, no ads, no tracking — nothing leaves your device
 
-Fantasy Squad Picker is an unofficial, independent app. It is not affiliated with, endorsed by, or associated with any football competition, club, or fantasy game provider.
+Squad Picker is an unofficial, independent app. It is not affiliated with, endorsed by, or associated with any football competition, club, or fantasy game provider.

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "128F115C525EBE0420BFE99F"
-               BuildableName = "Fantasy Squad Picker.app"
+               BuildableName = "Squad Picker.app"
                BlueprintName = "FPLPicker"
                ReferencedContainer = "container:FPLPicker.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "128F115C525EBE0420BFE99F"
-            BuildableName = "Fantasy Squad Picker.app"
+            BuildableName = "Squad Picker.app"
             BlueprintName = "FPLPicker"
             ReferencedContainer = "container:FPLPicker.xcodeproj">
          </BuildableReference>
@@ -54,7 +54,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "128F115C525EBE0420BFE99F"
-            BuildableName = "Fantasy Squad Picker.app"
+            BuildableName = "Squad Picker.app"
             BlueprintName = "FPLPicker"
             ReferencedContainer = "container:FPLPicker.xcodeproj">
          </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "128F115C525EBE0420BFE99F"
-            BuildableName = "Fantasy Squad Picker.app"
+            BuildableName = "Squad Picker.app"
             BlueprintName = "FPLPicker"
             ReferencedContainer = "container:FPLPicker.xcodeproj">
          </BuildableReference>
