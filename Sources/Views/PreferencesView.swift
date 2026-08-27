@@ -84,7 +84,7 @@ struct PreferencesView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Squad Picker")
+                    Text("Fantasy Picker")
                         .font(.largeTitle.bold())
                         .foregroundStyle(.white)
                     if let deadline = state.nextDeadline {
