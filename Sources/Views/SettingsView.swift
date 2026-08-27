@@ -308,7 +308,7 @@ struct SettingsView: View {
             Text("by Anish Gupta")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Theme.mint)
-            Text("FPL Squad Picker")
+            Text("Fantasy Squad Picker")
                 .font(.caption2)
                 .foregroundStyle(.white.opacity(0.4))
         }

@@ -25,7 +25,7 @@ enum SquadShare {
         let bench = squad.bench.map { "\($0.element.webName) (\($0.team.shortName) \(formatPrice(tenths: $0.priceTenths)))" }
         lines.append("Bench: \(bench.joined(separator: ", "))")
         lines.append("")
-        lines.append("Built with FPL Squad Picker")
+        lines.append("Built with Fantasy Squad Picker")
         return lines.joined(separator: "\n")
     }
 
@@ -93,7 +93,7 @@ struct ShareCardView: View {
                     .foregroundStyle(.white.opacity(0.8))
             }
 
-            Text("Built with FPL Squad Picker")
+            Text("Built with Fantasy Squad Picker")
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.45))
         }
