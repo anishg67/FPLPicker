@@ -251,6 +251,7 @@ struct SurveyView: View {
                 }
             }
             .padding(24)
+            .readableColumn()
         }
     }
 
@@ -327,6 +328,7 @@ struct SurveyView: View {
                 }
             }
             .padding(24)
+            .readableColumn()
         }
     }
 }

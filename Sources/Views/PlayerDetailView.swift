@@ -40,6 +40,7 @@ struct PlayerDetailView: View {
                         statsGrid
                     }
                     .padding(20)
+                    .readableColumn()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

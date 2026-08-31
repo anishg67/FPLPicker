@@ -45,6 +45,7 @@ struct SquadView: View {
                     controls
                 }
                 .padding(20)
+                .readableColumn()
             }
         }
         .sheet(item: $activeSheet) { sheet in

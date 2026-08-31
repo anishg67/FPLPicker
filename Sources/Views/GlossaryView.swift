@@ -50,6 +50,7 @@ struct GlossaryView: View {
                         }
                     }
                     .padding(20)
+                    .readableColumn()
                 }
             }
             .searchable(text: $query, prompt: "Search the jargon")

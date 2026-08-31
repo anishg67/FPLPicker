@@ -56,6 +56,7 @@ struct PreferencesView: View {
                     }
                 }
                 .padding(20)
+                .readableColumn()
             }
         }
         .sheet(item: $showingPlayerPicker) { target in

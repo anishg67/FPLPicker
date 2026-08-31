@@ -75,6 +75,13 @@ extension View {
     func card(padding: CGFloat = 16) -> some View {
         modifier(CardBackground(padding: padding))
     }
+
+    /// Caps a screen's content column and centres it. The layout is designed
+    /// around a phone's width; stretched across an iPad it would give unreadable
+    /// line lengths and a pitch with the players marooned in the middle.
+    func readableColumn(_ maxWidth: CGFloat = 640) -> some View {
+        frame(maxWidth: maxWidth).frame(maxWidth: .infinity)
+    }
 }
 
 /// Filled pill button in the app's accent gradient.

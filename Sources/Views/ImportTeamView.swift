@@ -62,6 +62,7 @@ struct ImportTeamView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .padding(20)
+                .readableColumn()
             }
         }
         .sheet(item: $pickingPosition) { position in

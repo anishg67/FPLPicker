@@ -26,6 +26,7 @@ struct SettingsView: View {
                         byline
                     }
                     .padding(20)
+                    .readableColumn()
                 }
             }
             .navigationTitle("Settings")
