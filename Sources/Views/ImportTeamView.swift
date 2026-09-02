@@ -126,7 +126,9 @@ struct ImportTeamView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             VStack(alignment: .leading, spacing: 8) {
-                step(1, "Log in to your account at fantasy.premierleague.com")
+                linkStep(1, prefix: "Log in to your account at",
+                         linkText: "fantasy.premierleague.com",
+                         url: URL(string: "https://fantasy.premierleague.com")!)
                 step(2, "Open the **Pick Team** tab")
                 step(3, "Read the team number out of the address bar, like **1234567**")
             }
@@ -185,18 +187,48 @@ struct ImportTeamView: View {
         .card()
     }
 
+    private func stepNumber(_ number: Int) -> some View {
+        Text("\(number)")
+            .font(.caption2.weight(.bold))
+            .foregroundStyle(Theme.deepPurple)
+            .frame(width: 18, height: 18)
+            .background(Circle().fill(Theme.mint))
+    }
+
     /// One numbered instruction, with the number in a filled circle.
     private func step(_ number: Int, _ text: String) -> some View {
         HStack(alignment: .top, spacing: 10) {
-            Text("\(number)")
-                .font(.caption2.weight(.bold))
-                .foregroundStyle(Theme.deepPurple)
-                .frame(width: 18, height: 18)
-                .background(Circle().fill(Theme.mint))
+            stepNumber(number)
             Text(.init(text))
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.75))
                 .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+    }
+
+    /// A numbered instruction whose address opens in the browser. Uses a Link
+    /// rather than a markdown link inside Text: the latter renders as tinted
+    /// text but doesn't reliably respond to a tap.
+    private func linkStep(_ number: Int, prefix: String, linkText: String, url: URL) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            stepNumber(number)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(prefix)
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.75))
+                Link(destination: url) {
+                    HStack(spacing: 4) {
+                        Text(linkText)
+                            .font(.caption.weight(.semibold))
+                            .underline()
+                        Image(systemName: "arrow.up.right.square")
+                            .font(.system(size: 10, weight: .semibold))
+                    }
+                    .foregroundStyle(Theme.mint)
+                }
+                .buttonStyle(.plain)
+            }
             Spacer(minLength: 0)
         }
     }
