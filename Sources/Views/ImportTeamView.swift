@@ -120,10 +120,17 @@ struct ImportTeamView: View {
     private var idCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Your team ID").font(.headline).foregroundStyle(.white)
-            Text("Open your team on the FPL site or app — the number in the address, like fantasy.premierleague.com/entry/**1234567**/event/1.")
+            Text("Your team number is in the address, like fantasy.premierleague.com/entry/**1234567**/event/2. Here's how to find it.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.55))
                 .fixedSize(horizontal: false, vertical: true)
+
+            VStack(alignment: .leading, spacing: 8) {
+                step(1, "Log in to your account at fantasy.premierleague.com")
+                step(2, "Open the **Pick Team** tab")
+                step(3, "Read the team number out of the address bar, like **1234567**")
+            }
+            .padding(.vertical, 2)
 
             HStack(spacing: 10) {
                 TextField("1234567", text: $idText)
@@ -176,6 +183,22 @@ struct ImportTeamView: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .card()
+    }
+
+    /// One numbered instruction, with the number in a filled circle.
+    private func step(_ number: Int, _ text: String) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Text("\(number)")
+                .font(.caption2.weight(.bold))
+                .foregroundStyle(Theme.deepPurple)
+                .frame(width: 18, height: 18)
+                .background(Circle().fill(Theme.mint))
+            Text(.init(text))
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.75))
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
     }
 
     // MARK: - Manual squad builder
