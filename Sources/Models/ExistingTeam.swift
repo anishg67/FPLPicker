@@ -14,7 +14,7 @@ enum TeamStatus: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .none: return "I'm starting from scratch"
         case .importByID: return "Import it with my team ID"
-        case .manual: return "I'll enter my 15 by hand"
+        case .manual: return "I'll enter my 15 players by hand"
         }
     }
     var detail: String {

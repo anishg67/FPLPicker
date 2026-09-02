@@ -36,14 +36,14 @@ enum SurveyContent {
                       detail: "Build me a whole squad", score: 0),
                 .init(text: "Yes — import it with my team ID",
                       detail: "I'll pull your squad, bank and squad value straight from the game", score: 0),
-                .init(text: "Yes — I'll enter my 15 by hand",
+                .init(text: "Yes — I'll enter my 15 players by hand",
                       detail: "Pick your players, then tell me your bank and free transfers", score: 0)
             ]
         ),
         SurveyQuestion(
             id: 1,
             kind: .knowledge,
-            prompt: "How much top-flight football do you actually watch?",
+            prompt: "How much football do you actually watch?",
             subtitle: "No wrong answer — this just sets how much I explain.",
             options: [
                 .init(text: "Basically none", detail: "I know the sport exists", score: 0),
