@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Where the user tells the app about a squad they already own — either by FPL
-/// team ID or by picking the 15 by hand — along with their bank and free
+/// team ID or by picking the 15 players by hand — along with their bank and free
 /// transfers.
 struct ImportTeamView: View {
     @EnvironmentObject var state: AppState

@@ -26,7 +26,7 @@ enum FPLServiceError: LocalizedError {
         case .unknownTeamID(let id):
             return "No team was found with the ID \(id). It's the number in the address bar when you view your own team on the web."
         case .seasonNotStarted:
-            return "The season hasn't kicked off yet, so squads aren't published yet. Enter your 15 by hand instead — it takes a minute."
+            return "The season hasn't kicked off yet, so squads aren't published yet. Enter your 15 players by hand instead — it takes a minute."
         }
     }
 }
