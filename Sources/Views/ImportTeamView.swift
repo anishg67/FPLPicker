@@ -133,7 +133,7 @@ struct ImportTeamView: View {
                 linkStep(1, prefix: "Log in to your account at",
                          linkText: "fantasy.premierleague.com",
                          url: URL(string: "https://fantasy.premierleague.com")!)
-                step(2, "Open the **Pick Team** tab")
+                step(2, "Open the **Points** tab")
                 step(3, "Read the team number out of the address bar, like **1234567**")
             }
             .padding(.vertical, 2)

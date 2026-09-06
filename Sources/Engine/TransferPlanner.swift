@@ -63,13 +63,19 @@ struct TransferPlanner {
             if payingAHit && best.gain <= 4.0 { break }
             if best.gain <= 0.05 { break }
 
+            guard isLegal(best, in: current, bank: bank) else { break }
             moves.append(best)
             bank -= best.priceDelta
             current = current.map { $0.id == best.outgoing.id ? best.incoming : $0 }
         }
 
-        let alternatives = rankedMoves(in: squad, bank: bankTenths)
+        // Alternatives are offered alongside the plan, so they have to be legal
+        // *after* it — the plan's own moves have already changed the club counts
+        // and the bank. Ranking them against the original squad produced
+        // suggestions that would break the three-per-club limit once applied.
+        let alternatives = rankedMoves(in: current, bank: bank)
             .filter { move in !moves.contains(where: { $0.outgoing.id == move.outgoing.id }) }
+            .filter { isLegal($0, in: current, bank: bank) }
             .prefix(5)
 
         return TransferPlan(
@@ -81,6 +87,25 @@ struct TransferPlanner {
     }
 
     // MARK: - Search
+
+    /// Whether a move would still be legal applied to this squad: same
+    /// position, inside the bank, and within the club limit.
+    ///
+    /// The ranking already enforces all three, but every suggestion is checked
+    /// again before it is offered. A move is generated against one squad and
+    /// may be shown beside others that have since changed it, and an illegal
+    /// suggestion is worse than a missing one.
+    func isLegal(_ move: TransferMove, in squad: [RatedPlayer], bank: Int) -> Bool {
+        guard move.outgoing.position == move.incoming.position else { return false }
+        guard squad.contains(where: { $0.id == move.outgoing.id }) else { return false }
+        guard !squad.contains(where: { $0.id == move.incoming.id }) else { return false }
+        guard move.priceDelta <= bank else { return false }
+        if move.incoming.element.team != move.outgoing.element.team {
+            let atClub = squad.filter { $0.element.team == move.incoming.element.team }.count
+            guard atClub < maxPerClub else { return false }
+        }
+        return true
+    }
 
     private func bestMove(in squad: [RatedPlayer], bank: Int) -> TransferMove? {
         rankedMoves(in: squad, bank: bank).first
