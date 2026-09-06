@@ -470,8 +470,10 @@ struct PitchView: View {
             ForEach(Position.allCases) { position in
                 let line = squad.players(position)
                 if !line.isEmpty {
-                    // Spacing stays tight so a five-man defence still fits.
-                    HStack(alignment: .top, spacing: 6) {
+                    // Each player takes an equal share of the width, so a row
+                    // spreads across the pitch instead of huddling in the
+                    // middle — and a five-man defence still fits on a phone.
+                    HStack(alignment: .top, spacing: 0) {
                         ForEach(line) { player in
                             Button { onSelect(player) } label: {
                                 PlayerChip(
@@ -481,6 +483,7 @@ struct PitchView: View {
                                 )
                             }
                             .buttonStyle(.plain)
+                            .frame(maxWidth: .infinity)
                         }
                     }
                 }
