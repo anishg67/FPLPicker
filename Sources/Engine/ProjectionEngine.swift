@@ -5,6 +5,9 @@ struct RatedPlayer: Identifiable, Hashable {
     let element: Element
     let team: FPLTeam
     var projected: Double          // expected FPL points per gameweek
+    /// Expected points from a single match, before any fixture count is applied.
+    /// Chip planning multiplies this by a specific gameweek's fixtures.
+    var perMatch: Double
     var baseRate: Double           // scoring rate before fixture/availability adjustment
     var fixtureScore: Double       // average FDR over the horizon (1 easy ... 5 hard)
     var minutesShare: Double       // 0...1 share of available minutes played
@@ -178,8 +181,10 @@ struct ProjectionEngine {
             reasons.append("Your club: \(team.shortName)")
         }
 
-        let projected = max(0, base * fixtureMultiplier * minutesFactor
-                            * availabilityFactor * riskFactor * teamBias)
+        // Everything except the horizon-averaged fixture multiplier, so a
+        // specific gameweek's fixture count can be applied instead.
+        let perMatch = max(0, base * minutesFactor * availabilityFactor * riskFactor * teamBias)
+        let projected = max(0, perMatch * fixtureMultiplier)
 
         if formRate >= 6 && reliability > 0.3 {
             reasons.insert("Hot form (\(String(format: "%.1f", formRate)))", at: 0)
@@ -190,6 +195,7 @@ struct ProjectionEngine {
             element: element,
             team: team,
             projected: projected,
+            perMatch: perMatch,
             baseRate: base,
             fixtureScore: fdr,
             minutesShare: minutesShare,

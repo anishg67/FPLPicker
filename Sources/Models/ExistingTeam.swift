@@ -31,6 +31,7 @@ struct ExistingTeam: Codable, Equatable {
     var playerIDs: [Int] = []
     var bankTenths: Int = 0
     var freeTransfers: Int = 1
+    var chipsUsed = ChipUsage()
     var entryID: Int?
     var teamName: String?
     var managerName: String?

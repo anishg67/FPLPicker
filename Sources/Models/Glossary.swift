@@ -91,6 +91,36 @@ enum Glossary {
             example: "A −4 hit that gains you 6 points is a net 2-point win."
         ),
         GlossaryTerm(
+            term: "Chips",
+            short: "the four one-off boosts",
+            definition: "Four boosts you can play once each per half-season: Bench Boost, Triple Captain, Free Hit and Wildcard. One set expires at gameweek 19 and a fresh set arrives at gameweek 20.",
+            example: "Using a chip in a quiet week wastes it — most of their value comes from double and blank gameweeks."
+        ),
+        GlossaryTerm(
+            term: "Bench Boost",
+            short: nil,
+            definition: "For one gameweek your four substitutes score too, so all 15 count. Worth most when every player has a fixture, ideally two.",
+            example: nil
+        ),
+        GlossaryTerm(
+            term: "Triple Captain",
+            short: nil,
+            definition: "For one gameweek your captain scores triple rather than double. Best saved for a premium attacker with two fixtures or one very kind one.",
+            example: nil
+        ),
+        GlossaryTerm(
+            term: "Free Hit",
+            short: nil,
+            definition: "Unlimited transfers for a single gameweek, after which your squad snaps back to what it was. The usual use is a blank gameweek, when half your team isn't playing.",
+            example: nil
+        ),
+        GlossaryTerm(
+            term: "Wildcard",
+            short: nil,
+            definition: "Unlimited transfers that you keep, with no points hits. For rebuilding a squad that has drifted away from the players you actually want.",
+            example: nil
+        ),
+        GlossaryTerm(
             term: "Bank",
             short: "in the bank",
             definition: "Money you haven't spent. It sits unused but gives you room to upgrade later.",

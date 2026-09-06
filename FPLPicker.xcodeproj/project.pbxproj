@@ -14,9 +14,12 @@
 		152D242C93A1A014E92EFD85 /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */; };
 		1BDD3975274316D4FB77D6BE /* SquadEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBD9438029EDE14A9B2583 /* SquadEditor.swift */; };
 		272A876B36CDA919C959A3CC /* ProjectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2349FD947236EABE311FD75 /* ProjectionEngine.swift */; };
+		2FC7ACC0391D3D46B41F3AFC /* ChipPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AA023C1D3820AC55B5E582 /* ChipPlanner.swift */; };
 		343A8E4F63167F7C1B186948 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8A943DBDE5001C7DF45D5 /* Preferences.swift */; };
+		540F38C144E6E73647094F76 /* Chip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691B75470B449E7D38FB1DBB /* Chip.swift */; };
 		55ACB96C82BDF0289D689726 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14D1B40D0E9508C1377C2CF /* SettingsView.swift */; };
 		588110FFBB2B608E450C7D3B /* FPLPickerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF907660F5473FB6E2ED017A /* FPLPickerApp.swift */; };
+		71F262823465A015AE209244 /* ChipPlanCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA957307CF229DDED63064FE /* ChipPlanCard.swift */; };
 		7BEE9A6B3E3984A67211B6DC /* SquadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A4C00FDAE26107096AB99C /* SquadView.swift */; };
 		7C29A8D2C08B7B0F06245AB2 /* SavedTeamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDD897849F98F16182A18B4 /* SavedTeamsView.swift */; };
 		801D67F0DE145C7F2261698B /* SavedTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA79F3F0CF167385C35B2194 /* SavedTeam.swift */; };
@@ -35,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00AA023C1D3820AC55B5E582 /* ChipPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipPlanner.swift; sourceTree = "<group>"; };
 		0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
 		1A834F989A28EF529EEF093C /* FPLModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPLModels.swift; sourceTree = "<group>"; };
 		34A4C00FDAE26107096AB99C /* SquadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadView.swift; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 		4FD8A943DBDE5001C7DF45D5 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5EAA7DBBB5401210B7C8E667 /* ImportTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTeamView.swift; sourceTree = "<group>"; };
 		691A5B57D36C11252387F6DE /* FPLPicker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FPLPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		691B75470B449E7D38FB1DBB /* Chip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chip.swift; sourceTree = "<group>"; };
 		69FBD9438029EDE14A9B2583 /* SquadEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadEditor.swift; sourceTree = "<group>"; };
 		6EE568BD2F1E2D05501469B1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		71F125845BDEC94FF1B784C3 /* FPLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPLService.swift; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 		C32CE4C7F30394370E13A008 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		C68D61133D42AB3FDA30EFE4 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		CA79F3F0CF167385C35B2194 /* SavedTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTeam.swift; sourceTree = "<group>"; };
+		CA957307CF229DDED63064FE /* ChipPlanCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipPlanCard.swift; sourceTree = "<group>"; };
 		D2349FD947236EABE311FD75 /* ProjectionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionEngine.swift; sourceTree = "<group>"; };
 		D5349CB4E793E4A0410135DD /* TransferPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferPlanner.swift; sourceTree = "<group>"; };
 		DC4EB7B769D4F9E3249B8EE8 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -68,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				9806D1F6B14670E283BBF33B /* AppSettings.swift */,
+				691B75470B449E7D38FB1DBB /* Chip.swift */,
 				7BB578F35AFF666E2050E2C1 /* ExistingTeam.swift */,
 				1A834F989A28EF529EEF093C /* FPLModels.swift */,
 				7CDED9D84DE94F1E4E190C81 /* Glossary.swift */,
@@ -126,6 +133,7 @@
 		C76B0D0D99183CD193611C66 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				00AA023C1D3820AC55B5E582 /* ChipPlanner.swift */,
 				D2349FD947236EABE311FD75 /* ProjectionEngine.swift */,
 				69FBD9438029EDE14A9B2583 /* SquadEditor.swift */,
 				3FE9DA24D0F9206E0AE37942 /* SquadOptimizer.swift */,
@@ -137,6 +145,7 @@
 		D1A9DB2512D79665C9A09919 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CA957307CF229DDED63064FE /* ChipPlanCard.swift */,
 				91F4A2CA3BB0626CFD3FD8D2 /* GlossaryView.swift */,
 				5EAA7DBBB5401210B7C8E667 /* ImportTeamView.swift */,
 				0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */,
@@ -221,6 +230,9 @@
 			files = (
 				D2E5D1BB7DBCC7D1DBC5788C /* AppSettings.swift in Sources */,
 				C2D2628146390F86E8B12A13 /* AppState.swift in Sources */,
+				540F38C144E6E73647094F76 /* Chip.swift in Sources */,
+				71F262823465A015AE209244 /* ChipPlanCard.swift in Sources */,
+				2FC7ACC0391D3D46B41F3AFC /* ChipPlanner.swift in Sources */,
 				859697E6BC605862D2F108C1 /* ExistingTeam.swift in Sources */,
 				C4D760D5A0FF0F93B361EF7F /* FPLModels.swift in Sources */,
 				588110FFBB2B608E450C7D3B /* FPLPickerApp.swift in Sources */,
@@ -269,7 +281,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fplpicker.app;
 				PRODUCT_NAME = "Squad XI";
 				SDKROOT = iphoneos;
@@ -362,7 +374,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fplpicker.app;
 				PRODUCT_NAME = "Squad XI";
 				SDKROOT = iphoneos;

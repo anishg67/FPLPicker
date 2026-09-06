@@ -169,7 +169,43 @@ image drawn for export (club-coloured badges rather than remote photos, which
 wouldn't have loaded in time for `ImageRenderer`), or a plain-text lineup that
 pastes cleanly into a mini-league chat.
 
-### 8. Settings
+### 8. Chips
+
+`ChipPlanner` decides when to play Bench Boost, Triple Captain, Free Hit and
+Wildcard, and says plainly when to sit on them. The four windows come from the
+game's own `chips` block, so the app knows each chip exists twice a season — one
+set expiring at gameweek 19, a second arriving at gameweek 20 — without that
+being hardcoded.
+
+Each chip is valued in points it would add over playing the week normally:
+
+- **Bench Boost** — what the four substitutes would score that gameweek
+- **Triple Captain** — the third helping of your best outfield captain
+- **Free Hit** — the gap between a one-week rebuild and the XI you own, where
+  the replacement squad is built greedily within your budget and the
+  three-per-club limit, so it stays a team you could actually field
+- **Wildcard** — how much better the optimizer's squad is than yours, per
+  gameweek, expressed as a ratio
+
+The play/hold thresholds are **multiples of an ordinary week, not point totals**.
+Early in a season the game's own expected-points figures are simply season
+averages, so every projection — ours and FPL's alike — runs high, and a fixed
+"worth 14 points" bar would fire every week. Asking whether *this* week is
+unusually good for the chip is scale-free and closer to how the decision is
+actually made. A second guard requires the gain to be at least a tenth of what
+the squad scores that week, because when a typical week is worth nothing,
+dividing by it turns a one-point gain into "95× better".
+
+Only gameweeks whose deadline hasn't passed are considered — a gameweek that has
+kicked off is no use even though the game hasn't marked it finished yet.
+
+When no doubles or blanks are scheduled, which is most of the early season, the
+honest answer is to hold, and the app says so rather than inventing a gameweek.
+
+When you tell the app about a squad you already own it also asks **which chips
+you've already played**, so it never suggests one you no longer have.
+
+### 9. Settings
 
 The gear in the header of the inputs and squad screens opens app-wide settings,
 kept separate from the per-squad inputs:
@@ -214,11 +250,13 @@ Sources/
   Models/ExistingTeam.swift   a squad the user already owns, and its validation
   Models/Glossary.swift       plain-English definitions of the jargon
   Models/AppSettings.swift    accent, card detail and app-wide defaults
+  Models/Chip.swift           the four chips, their windows and usage
   Services/FPLService.swift   live API client
   Engine/ProjectionEngine.swift  stats → expected points
   Engine/SquadOptimizer.swift    expected points → legal 15
   Engine/SquadEditor.swift       validated manual transfers, subs and armband
   Engine/TransferPlanner.swift   what to change about a squad you already own
+  Engine/ChipPlanner.swift       when to play each chip, or hold it
   ViewModels/AppState.swift   phases, persistence, editing, background builds
   Views/                      survey, jargon buster, team import, inputs, pitch,
                               player detail, transfers, saved teams, share card,

@@ -39,6 +39,7 @@ struct SquadView: View {
                     PitchView(squad: squad) { activeSheet = .player($0) }
                     editHint
                     if state.importedTeam != nil { transfersCard }
+                    if !state.chipPlan.isEmpty { ChipPlanCard(plan: state.chipPlan) }
                     benchStrip
                     notesCard
                     if showingList { fullList }

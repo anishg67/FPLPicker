@@ -30,7 +30,11 @@ struct ImportTeamView: View {
                         squadBuilder
                     }
 
-                    if !draft.playerIDs.isEmpty { resourcesCard }
+                    if !draft.playerIDs.isEmpty {
+                        resourcesCard
+                        ChipsUsedCard(usage: $draft.chipsUsed,
+                                      currentGameweek: state.currentGameweek)
+                    }
 
                     if let error = state.importError {
                         Label(error, systemImage: "exclamationmark.triangle.fill")

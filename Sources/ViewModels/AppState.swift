@@ -39,6 +39,7 @@ final class AppState: ObservableObject {
     /// Set when the user is working from a squad they already own.
     @Published var importedTeam: ExistingTeam?
     @Published var transferPlan: TransferPlan?
+    @Published var chipPlan: [ChipAdvice] = []
     @Published var transfersMade = 0
     @Published var importError: String?
     @Published var isImporting = false
@@ -65,6 +66,13 @@ final class AppState: ObservableObject {
         if minutes < 1 { return "Updated just now" }
         if minutes < 60 { return "Updated \(minutes) min ago" }
         return "Updated \(minutes / 60)h ago"
+    }
+
+    /// The gameweek being played, or the next one if none is live.
+    var currentGameweek: Int {
+        data?.events.first(where: { $0.isCurrent })?.id
+            ?? data?.nextEvent?.id
+            ?? 1
     }
 
     var nextDeadline: String? {
@@ -141,6 +149,7 @@ final class AppState: ObservableObject {
                     self.transferPlan = nil
                     self.transfersMade = 0
                     self.phase = .result
+                    self.recomputeChipPlan()
                 }
             } catch {
                 await MainActor.run {
@@ -220,12 +229,28 @@ final class AppState: ObservableObject {
         importError = nil
         editError = nil
         recomputeTransferPlan()
+        recomputeChipPlan()
         phase = .result
     }
 
     var freeTransfersLeft: Int {
         guard let team = importedTeam else { return 0 }
         return max(0, team.freeTransfers - transfersMade)
+    }
+
+    /// Works out when each chip is worth playing. Cheap enough to redo whenever
+    /// the squad changes, apart from the wildcard's optimizer run.
+    func recomputeChipPlan() {
+        guard let squad, let data else {
+            chipPlan = []
+            return
+        }
+        chipPlan = ChipPlanner(
+            squad: squad,
+            rated: rated,
+            data: data,
+            usage: importedTeam?.chipsUsed ?? ChipUsage()
+        ).plan()
     }
 
     func recomputeTransferPlan() {
@@ -277,12 +302,14 @@ final class AppState: ObservableObject {
         guard importedTeam != nil, self.squad?.squad.map(\.id) != before else { return }
         transfersMade += 1
         recomputeTransferPlan()
+        recomputeChipPlan()
     }
 
     func substitute(starter: RatedPlayer, with sub: RatedPlayer) {
         guard let squad else { return }
         apply { try SquadEditor.substitute(squad, starter: starter, substitute: sub) }
         recomputeTransferPlan()
+        recomputeChipPlan()
     }
 
     func makeCaptain(_ player: RatedPlayer) {

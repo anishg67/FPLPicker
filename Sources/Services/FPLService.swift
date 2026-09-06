@@ -5,6 +5,8 @@ struct LeagueData {
     let elements: [Element]
     let teams: [FPLTeam]
     let fixtures: [Fixture]
+    let events: [GameweekEvent]
+    let chipWindows: [ChipWindow]
     let nextEvent: GameweekEvent?
     let fetchedAt: Date
 
@@ -88,6 +90,8 @@ struct FPLService {
             elements: boot.elements,
             teams: boot.teams,
             fixtures: fix,
+            events: boot.events,
+            chipWindows: boot.chips,
             nextEvent: next,
             fetchedAt: Date()
         )

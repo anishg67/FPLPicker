@@ -8,6 +8,7 @@ struct Bootstrap: Decodable {
     let teams: [FPLTeam]
     let elements: [Element]
     let elementTypes: [ElementType]
+    let chips: [ChipWindow]
 }
 
 struct GameweekEvent: Decodable {
