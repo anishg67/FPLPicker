@@ -1,0 +1,5 @@
+# The local dev server and its scaffolding never run on Vercel — api/fpl.js is
+# deployed as a function and the rest is served statically.
+server.mjs
+README.md
+node_modules

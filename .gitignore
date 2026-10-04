@@ -3,3 +3,6 @@ DerivedData/
 *.xcuserdatad
 xcuserdata/
 .DS_Store
+
+# Vercel CLI link + build cache
+.vercel
