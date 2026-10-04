@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Squad XI">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00fa99"/>
+      <stop offset="1" stop-color="#05defa"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#42078f"/>
+      <stop offset="1" stop-color="#1a032b"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g stroke="#fff" stroke-opacity="0.12" fill="none" stroke-width="2">
+    <rect x="18" y="14" width="92" height="100" rx="6"/>
+    <line x1="18" y1="64" x2="110" y2="64"/>
+    <circle cx="64" cy="64" r="15"/>
+  </g>
+  <g fill="url(#g)">
+    <circle cx="64" cy="104" r="6"/>
+    <circle cx="30" cy="80" r="6"/><circle cx="52" cy="84" r="6"/><circle cx="76" cy="84" r="6"/><circle cx="98" cy="80" r="6"/>
+    <circle cx="34" cy="50" r="6"/><circle cx="56" cy="46" r="6"/><circle cx="78" cy="46" r="6"/>
+    <circle cx="48" cy="22" r="6"/><circle cx="80" cy="22" r="6"/>
+  </g>
+</svg>

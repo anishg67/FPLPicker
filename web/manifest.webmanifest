@@ -1,0 +1,12 @@
+{
+  "name": "Squad XI",
+  "short_name": "Squad XI",
+  "description": "Fantasy football squad picker, transfer planner and chip strategist.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#210533",
+  "theme_color": "#210533",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-accent="mint">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Squad XI — Fantasy Football Squad Picker</title>
+<meta name="description" content="Build a legal 15-player fantasy football squad under your budget, get transfer suggestions from the team you already own, and work out when to play each chip.">
+<meta name="theme-color" content="#210533">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Squad XI">
+<meta property="og:description" content="A squad picker that works out the best legal 15 under your budget, suggests transfers, and tells you when to play each chip.">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <div class="mark">XI</div>
+    <div>
+      <div class="title">Squad XI</div>
+      <div class="sub" id="masthead-sub">Fantasy football squad picker</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn btn-sm btn-ghost hidden" id="glossary-button" type="button">Jargon</button>
+  </header>
+
+  <main id="screen" aria-live="polite"></main>
+
+  <footer class="credit">by Anish Gupta</footer>
+</div>
+
+<nav class="tabbar hidden" id="tabbar" role="tablist" aria-label="Sections"></nav>
+<div id="sheet-root"></div>
+
+<noscript>
+  <p style="padding:16px">Squad XI needs JavaScript: every projection and the squad search run in your browser.</p>
+</noscript>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

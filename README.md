@@ -3,6 +3,9 @@
 An iOS app that builds a legal Fantasy Premier League squad for you from live
 FPL data — budget, favourite clubs and as much or as little input as you want.
 
+There is also a web version in [`web/`](web/) that runs the same engine in the
+browser. See [web/README.md](web/README.md) to run or deploy it.
+
 ## Running it
 
 ```bash
@@ -261,7 +264,24 @@ Sources/
   Views/                      survey, jargon buster, team import, inputs, pitch,
                               player detail, transfers, saved teams, share card,
                               settings
+
+web/
+  index.html                  the page shell
+  styles.css                  dark and light, five accents
+  js/models.js                positions, availability, chips, preferences
+  js/projection.js            port of ProjectionEngine.swift
+  js/optimizer.js             port of SquadOptimizer.swift
+  js/transfers.js             port of TransferPlanner.swift
+  js/chips.js                 port of ChipPlanner.swift
+  js/content.js               survey questions and the jargon buster
+  js/ui.js, js/app.js         DOM helpers, state and screens
+  api/fpl.js                  serverless CORS proxy for the public API
+  server.mjs                  local dev server
 ```
+
+The four engine modules under `web/js/` are direct ports of the Swift files
+they name, so both apps produce the same squad from the same data. Change one
+and change the other, or they will quietly disagree.
 
 ## Notes
 

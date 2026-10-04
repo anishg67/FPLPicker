@@ -1,0 +1,14 @@
+{
+  "name": "squad-xi-web",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Web version of Squad XI — fantasy football squad picker.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
