@@ -75,6 +75,74 @@ export class TransferPlanner {
     };
   }
 
+  // MARK: - What a chosen set of transfers would be worth
+
+  /**
+   * Applies moves one at a time, skipping any that stops being legal once the
+   * earlier ones have landed.
+   *
+   * The user ticks moves in any order, and two perfectly good suggestions can
+   * be illegal together — both buying into the same club, or both selling the
+   * same player. Rather than refuse the whole selection, this takes what it can
+   * and reports what it dropped.
+   */
+  resolve(moves, bank) {
+    let current = this.squad.slice();
+    let remaining = bank;
+    const applied = [];
+    const rejected = [];
+
+    for (const move of moves) {
+      if (!this.isLegal(move, current, remaining)) {
+        rejected.push(move);
+        continue;
+      }
+      applied.push(move);
+      remaining -= move.priceDelta;
+      current = current.map((player) => (player.id === move.outgoing.id ? move.incoming : player));
+    }
+    return { applied, rejected, squad: current, bank: remaining };
+  }
+
+  /**
+   * What the squad would score with `moves` applied, and what it scores now.
+   *
+   * Expressed in the same currency as everything else on the squad screen — the
+   * best legal XI with the captain doubled — so before and after are directly
+   * comparable.
+   */
+  outlook(moves) {
+    const resolved = this.resolve(moves, this.bankTenths);
+    const before = projectedPoints(this.squad);
+    const after = projectedPoints(resolved.squad);
+    const count = resolved.applied.length;
+    const hits = Math.max(0, count - this.freeTransfers);
+    const pointsHit = hits * 4;
+    const gain = after - before;
+
+    return {
+      before,
+      after,
+      applied: resolved.applied,
+      rejected: resolved.rejected,
+      freeTransfers: this.freeTransfers,
+      bankBefore: this.bankTenths,
+      bankAfter: resolved.bank,
+      count,
+      hits,
+      pointsHit,
+      gain,
+      /** What you actually bank this week, with the hit paid for. */
+      net: gain - pointsHit,
+      isEmpty: count === 0,
+      /**
+       * How many gameweeks the gain has to hold for the hit to pay for itself.
+       * Null when there's no hit, or when the move loses points anyway.
+       */
+      weeksToBreakEven: pointsHit > 0 && gain > 0 ? Math.ceil(pointsHit / gain) : null,
+    };
+  }
+
   // MARK: - Search
 
   /**
@@ -145,4 +213,10 @@ export class TransferPlanner {
     this.pools.set(position, list);
     return list;
   }
+}
+
+/** Projected points — best legal XI, captain doubled — for any 15. */
+export function projectedPoints(squad) {
+  const evaluation = evaluate(squad);
+  return evaluation.startingSum + evaluation.captain.projected;
 }

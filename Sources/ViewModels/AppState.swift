@@ -39,6 +39,9 @@ final class AppState: ObservableObject {
     /// Set when the user is working from a squad they already own.
     @Published var importedTeam: ExistingTeam?
     @Published var transferPlan: TransferPlan?
+    /// Looks up what each club has coming. Rebuilt with the league data, since
+    /// the fixture list only changes when that does.
+    @Published var fixtures: FixturePlanner?
     @Published var chipPlan: [ChipAdvice] = []
     @Published var transfersMade = 0
     @Published var importError: String?
@@ -89,6 +92,7 @@ final class AppState: ObservableObject {
         do {
             let league = try await service.load()
             data = league
+            fixtures = FixturePlanner(data: league)
             refreshRatings()
             phase = survey == nil ? .survey : .preferences
         } catch {
@@ -254,18 +258,32 @@ final class AppState: ObservableObject {
     }
 
     func recomputeTransferPlan() {
-        guard let squad, importedTeam != nil else {
+        guard importedTeam != nil else {
             transferPlan = nil
             return
         }
-        let planner = TransferPlanner(
+        transferPlan = transferPlanner?.plan()
+    }
+
+    /// The planner behind the suggestions, exposed so the transfers card can ask
+    /// it what a chosen set of moves would be worth without re-deriving it.
+    var transferPlanner: TransferPlanner? {
+        guard let squad else { return nil }
+        return TransferPlanner(
             squad: squad.squad,
             rated: rated,
             bankTenths: squad.remainingTenths,
             freeTransfers: freeTransfersLeft,
             maxPerClub: effectivePrefs.maxPerClub
         )
-        transferPlan = planner.plan()
+    }
+
+    /// Applies exactly the moves the user ticked, skipping any that clash.
+    func applyTransfers(_ moves: [TransferMove]) {
+        guard let planner = transferPlanner else { return }
+        for move in planner.resolve(moves, bank: planner.bankTenths).applied {
+            replace(move.outgoing, with: move.incoming)
+        }
     }
 
     func apply(_ move: TransferMove) {
@@ -449,6 +467,7 @@ final class AppState: ObservableObject {
         do {
             let league = try await service.load()
             data = league
+            fixtures = FixturePlanner(data: league)
             refreshRatings()
             if let current = squad {
                 // Re-price the same 15 with the new data.

@@ -4,6 +4,7 @@
 
 import { formatPrice, positionShort, POSITIONS as POSITION_ORDER, num } from './models.js';
 import { clubColour } from './clubs.js';
+import { difficultyColour, difficultyLabel } from './fixtures.js';
 
 /** Hyperscript: h('div.card', { onclick }, 'text', childNode). */
 export function h(spec, props, ...children) {
@@ -271,4 +272,30 @@ export function promptSheet({ title, body, value = '', confirmLabel = 'Save', on
     input.focus();
     input.select();
   });
+}
+
+// ---------- Fixture ticker ----------
+
+/** One gameweek's cell: the opponent(s), coloured by difficulty. */
+export function fixtureCell(week, { compact = false } = {}) {
+  return h('span.fx', {
+    style: { background: difficultyColour(week.difficulty, week.isBlank) },
+    class: compact ? 'fx-compact' : null,
+    title: week.isBlank
+      ? `Gameweek ${week.gameweek}: no fixture`
+      : `Gameweek ${week.gameweek}: ${week.fixtures.map((f) => `${f.opponent.name} (${f.isHome ? 'H' : 'A'})`).join(', ')}`,
+  }, week.ticker);
+}
+
+/** A club's next few gameweeks, as a row of coloured cells. */
+export function fixtureRun(weeks, options = {}) {
+  return h('span.fx-run', weeks.map((week) => fixtureCell(week, options)));
+}
+
+export function fixtureLegend() {
+  return h('div.stack', { style: { gap: '4px' } },
+    h('div.chips', [1.5, 2.5, 3.0, 4.0, 5.0].map((difficulty) => h('span.fx-key',
+      h('span.fx-swatch', { style: { background: difficultyColour(difficulty, false) } }),
+      difficultyLabel(difficulty)))),
+    h('p.tiny.muted', 'Home fixtures in capitals, away in lower case. A dash is a blank gameweek; two names in one cell is a double.'));
 }

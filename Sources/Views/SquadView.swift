@@ -10,6 +10,9 @@ struct SquadView: View {
     @State private var showingNamePrompt = false
     @State private var teamName = ""
     @State private var confirmingRebuild = false
+    /// Which suggested transfers the user has ticked, by move id.
+    @State private var selectedMoves: Set<String> = []
+    @State private var showingAlternatives = false
 
     private enum ActiveSheet: Identifiable {
         case player(RatedPlayer)
@@ -38,6 +41,7 @@ struct SquadView: View {
                     toolbar
                     PitchView(squad: squad) { activeSheet = .player($0) }
                     editHint
+                    FixtureTickerCard(squad: squad)
                     if state.importedTeam != nil { transfersCard }
                     if !state.chipPlan.isEmpty { ChipPlanCard(plan: state.chipPlan) }
                     benchStrip
@@ -216,6 +220,22 @@ struct SquadView: View {
 
     // MARK: - Suggested transfers
 
+    /// Every move on offer, the recommended plan first.
+    private var offeredMoves: [TransferMove] {
+        guard let plan = state.transferPlan else { return [] }
+        return plan.moves + plan.alternatives
+    }
+
+    private var chosenMoves: [TransferMove] {
+        offeredMoves.filter { selectedMoves.contains($0.id) }
+    }
+
+    /// What the ticked moves would do to the squad's projected score.
+    private var outlook: TransferOutlook? {
+        guard let planner = state.transferPlanner else { return nil }
+        return planner.outlook(applying: chosenMoves)
+    }
+
     @ViewBuilder
     private var transfersCard: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -235,40 +255,19 @@ struct SquadView: View {
             }
 
             if let plan = state.transferPlan, !plan.isEmpty {
+                Text("Tick the ones you'd make. The projection updates as you go.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.55))
+
                 ForEach(plan.moves) { move in
-                    moveRow(move, actionTitle: "Apply")
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(plan.moves.count == 1
-                         ? String(format: "That's worth about %.1f pts a gameweek.", plan.grossGain)
-                         : String(format: "Together they add about %.1f pts a gameweek.", plan.grossGain))
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.7))
-                    if plan.hits > 0 {
-                        Text("That's \(plan.moves.count) transfers with \(state.freeTransfersLeft) free, so a \(plan.pointsHit)-point hit — worth it only if you keep the gain for more than a week.")
-                            .font(.caption)
-                            .foregroundStyle(.orange)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-
-                if plan.moves.count > 1 {
-                    Button("Apply all \(plan.moves.count)") {
-                        state.applySuggestedTransfers()
-                    }
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Capsule().fill(.white.opacity(0.14)))
+                    moveRow(move, recommended: true)
                 }
 
                 if !plan.alternatives.isEmpty {
-                    DisclosureGroup {
+                    DisclosureGroup(isExpanded: $showingAlternatives) {
                         VStack(spacing: 10) {
                             ForEach(plan.alternatives) { move in
-                                moveRow(move, actionTitle: "Swap")
+                                moveRow(move, recommended: false)
                             }
                         }
                         .padding(.top, 8)
@@ -279,6 +278,8 @@ struct SquadView: View {
                     }
                     .tint(Theme.mint)
                 }
+
+                if let outlook { outlookPanel(outlook) }
             } else {
                 Text("Nothing worth changing — no transfer I can find improves this squad by enough to bother.")
                     .font(.subheadline)
@@ -288,40 +289,159 @@ struct SquadView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .card()
+        .onAppear(perform: preselectSuggested)
+        .onChange(of: state.transferPlan?.moves.map(\.id) ?? []) { _ in preselectSuggested() }
     }
 
-    private func moveRow(_ move: TransferMove, actionTitle: String) -> some View {
-        HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 6) {
-                    Text(move.outgoing.element.webName)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.white.opacity(0.6))
-                        .strikethrough()
-                    Image(systemName: "arrow.right")
-                        .font(.caption2.weight(.bold))
-                        .foregroundStyle(.white.opacity(0.4))
-                    Text(move.incoming.element.webName)
-                        .font(.subheadline.weight(.bold))
-                        .foregroundStyle(.white)
+    /// Start with the recommended plan ticked, so the headline number answers
+    /// "what do I get if I just do what it says?" without any tapping.
+    private func preselectSuggested() {
+        selectedMoves = Set(state.transferPlan?.moves.map(\.id) ?? [])
+    }
+
+    // MARK: Expected points from the chosen transfers
+
+    @ViewBuilder
+    private func outlookPanel(_ outlook: TransferOutlook) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Divider().overlay(.white.opacity(0.12))
+
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
+                projectionColumn("Now", value: outlook.before, tint: .white.opacity(0.7))
+                Image(systemName: "arrow.right")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.white.opacity(0.35))
+                projectionColumn("After", value: outlook.after,
+                                 tint: outlook.gain >= 0 ? Theme.mint : .orange)
+                Spacer(minLength: 0)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(String(format: "%+.1f", outlook.gain))
+                        .font(.title3.weight(.bold))
+                        .foregroundStyle(outlook.gain >= 0 ? Theme.mint : .orange)
+                        .monospacedDigit()
+                    Text("pts / gameweek")
+                        .font(.system(size: 9))
+                        .foregroundStyle(.white.opacity(0.45))
                 }
-                Text("\(move.outgoing.team.shortName) \(formatPrice(tenths: move.outgoing.priceTenths)) → \(move.incoming.team.shortName) \(formatPrice(tenths: move.incoming.priceTenths))")
-                    .font(.caption2)
-                    .foregroundStyle(.white.opacity(0.55))
-                Text(String(format: "+%.1f pts/GW", move.gain))
-                    .font(.caption2.weight(.semibold))
-                    .foregroundStyle(Theme.mint)
             }
-            Spacer(minLength: 0)
-            Button(actionTitle) {
-                state.apply(move)
+
+            if outlook.isEmpty {
+                Text("Nothing ticked — this is what you'd score as you are.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+            } else {
+                HStack(spacing: 6) {
+                    chipLabel("\(outlook.count) transfer\(outlook.count == 1 ? "" : "s")")
+                    if outlook.pointsHit > 0 {
+                        chipLabel("−\(outlook.pointsHit) hit", tint: .orange)
+                    } else {
+                        chipLabel("No hit", tint: Theme.mint)
+                    }
+                    chipLabel(String(format: "net %+.1f", outlook.net),
+                              tint: outlook.net >= 0 ? Theme.mint : .orange)
+                    chipLabel("bank \(formatPrice(tenths: outlook.bankAfter))")
+                }
+
+                if let weeks = outlook.weeksToBreakEven {
+                    Text("The hit pays for itself after \(weeks) gameweek\(weeks == 1 ? "" : "s") if the gain holds.")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                if !outlook.rejected.isEmpty {
+                    Text("\(outlook.rejected.count) of your picks can't be made alongside the others — same player out, or it would break the three-per-club limit. \(outlook.rejected.map { $0.incoming.element.webName }.joined(separator: ", ")) left out.")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                Button("Apply \(outlook.count) transfer\(outlook.count == 1 ? "" : "s")") {
+                    state.applyTransfers(chosenMoves)
+                }
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(Theme.deepPurple)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(Capsule().fill(Theme.accentGradient))
+                .buttonStyle(.plain)
             }
-            .font(.caption.weight(.bold))
-            .foregroundStyle(Theme.deepPurple)
-            .padding(.horizontal, 14).padding(.vertical, 9)
-            .background(Capsule().fill(Theme.accentGradient))
-            .buttonStyle(.plain)
+
+            Text("Projected points are the best legal XI with the captain doubled, for one gameweek.")
+                .font(.system(size: 9))
+                .foregroundStyle(.white.opacity(0.35))
+                .fixedSize(horizontal: false, vertical: true)
         }
+    }
+
+    private func projectionColumn(_ title: String, value: Double, tint: Color) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+                .font(.system(size: 9, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.45))
+            Text(String(format: "%.1f", value))
+                .font(.title3.weight(.bold))
+                .foregroundStyle(tint)
+                .monospacedDigit()
+        }
+    }
+
+    private func chipLabel(_ text: String, tint: Color = .white.opacity(0.6)) -> some View {
+        Text(text)
+            .font(.system(size: 10, weight: .semibold))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 8).padding(.vertical, 4)
+            .background(Capsule().fill(.white.opacity(0.1)))
+    }
+
+    private func moveRow(_ move: TransferMove, recommended: Bool) -> some View {
+        let isSelected = selectedMoves.contains(move.id)
+        return Button {
+            if isSelected { selectedMoves.remove(move.id) } else { selectedMoves.insert(move.id) }
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.title3)
+                    .foregroundStyle(isSelected ? Theme.mint : .white.opacity(0.3))
+
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 6) {
+                        Text(move.outgoing.element.webName)
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(.white.opacity(0.6))
+                            .strikethrough()
+                        Image(systemName: "arrow.right")
+                            .font(.caption2.weight(.bold))
+                            .foregroundStyle(.white.opacity(0.4))
+                        Text(move.incoming.element.webName)
+                            .font(.subheadline.weight(.bold))
+                            .foregroundStyle(.white)
+                    }
+                    Text("\(move.outgoing.team.shortName) \(formatPrice(tenths: move.outgoing.priceTenths)) → \(move.incoming.team.shortName) \(formatPrice(tenths: move.incoming.priceTenths))")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.55))
+                    HStack(spacing: 6) {
+                        Text(String(format: "+%.1f pts/GW", move.gain))
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(Theme.mint)
+                        if let planner = state.fixtures {
+                            FixtureRun(weeks: planner.next(3, for: move.incoming.element.team), compact: true)
+                                .frame(maxWidth: 108)
+                        }
+                    }
+                }
+                Spacer(minLength: 0)
+                if recommended {
+                    Text("PICK")
+                        .font(.system(size: 8, weight: .heavy))
+                        .foregroundStyle(Theme.deepPurple)
+                        .padding(.horizontal, 6).padding(.vertical, 3)
+                        .background(Capsule().fill(Theme.accentGradient))
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Bench

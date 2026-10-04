@@ -12,12 +12,13 @@ import { SquadOptimizer, OptimizerError, rebuild } from './optimizer.js';
 import { TransferPlanner } from './transfers.js';
 import { ChipPlanner } from './chips.js';
 import { loadLeagueData, loadTeam, FPLError } from './api.js';
+import { FixturePlanner } from './fixtures.js';
 import { QUESTIONS, evaluateSurvey, knowledgeLabel, TEAM_STATUS_META, searchGlossary } from './content.js';
 import { clubColour } from './clubs.js';
 import {
   h, mount, tile, pill, notice, progress, choice, switchRow, sliderRow,
   pitch, benchStrip, playerRow, playerChip, openSheet, closeSheet,
-  toast, confirmSheet, promptSheet,
+  toast, confirmSheet, promptSheet, fixtureRun, fixtureLegend,
 } from './ui.js';
 
 // ---------------------------------------------------------------- persistence
@@ -73,7 +74,12 @@ const state = {
   rated: [],
   ratedByID: new Map(),
   squad: null,
+  /** Looks up what each club has coming; rebuilt whenever the league data is. */
+  fixturePlanner: null,
   transferPlan: null,
+  /** Which suggested transfers the user has ticked, by move id. */
+  selectedMoves: new Set(),
+  showBenchFixtures: false,
   chipAdvice: null,
   error: null,
   busy: false,
@@ -115,6 +121,7 @@ function rateAll() {
   const prefs = effectivePreferences(state.prefs);
   state.rated = new ProjectionEngine(state.data, prefs).rateAll();
   state.ratedByID = new Map(state.rated.map((player) => [player.id, player]));
+  state.fixturePlanner = new FixturePlanner(state.data);
 }
 
 const ownedPlayers = () => state.team.playerIDs
@@ -133,6 +140,7 @@ function ownedBudget() {
 function buildSquad() {
   state.error = null;
   state.transferPlan = null;
+  state.transferPlanner = null;
   state.chipAdvice = null;
 
   try {
@@ -141,13 +149,17 @@ function buildSquad() {
       const check = validateSquad(players, state.prefs.maxPerClub);
       state.squad = rebuild(players, ownedBudget(), check.isValid ? [] : [check.message], false);
 
-      state.transferPlan = new TransferPlanner({
+      state.transferPlanner = new TransferPlanner({
         squad: players,
         rated: state.rated,
         bankTenths: state.team.bankTenths,
         freeTransfers: state.team.freeTransfers,
         maxPerClub: state.prefs.maxPerClub,
-      }).plan();
+      });
+      state.transferPlan = state.transferPlanner.plan();
+      // Start with the recommended plan ticked, so the headline number answers
+      // "what do I get if I just do what it says?" without any tapping.
+      state.selectedMoves = new Set(state.transferPlan.moves.map((move) => move.id));
     } else {
       const prefs = effectivePreferences(state.prefs);
       state.squad = new SquadOptimizer(state.rated, prefs).optimize();
@@ -591,7 +603,7 @@ function renderSquad() {
     overBudget ? notice('warn', 'This squad costs more than your budget.') : null,
 
     h('div.two-col',
-      h('div', pitchNode, benchNode),
+      h('div.stack', pitchNode, benchNode, fixtureTickerCard(squad)),
       h('div.stack',
         h('div.card.stack',
           h('h3', 'Actions'),
@@ -610,6 +622,50 @@ function renderSquad() {
             }, 'See them'))
           : null,
         bestChipCard())));
+}
+
+/**
+ * The next five gameweeks for everyone in the starting XI.
+ *
+ * Sitting next to the pitch, this answers the question the projection can only
+ * summarise: who each player actually faces. The model already weighs fixture
+ * difficulty, but a manager wants to see the run before trusting it.
+ */
+function fixtureTickerCard(squad, count = 5) {
+  const planner = state.fixturePlanner;
+  const gameweeks = planner ? planner.actionableGameweeks.slice(0, count) : [];
+
+  if (!gameweeks.length) {
+    return h('div.card.stack',
+      h('h3', `Next ${count} fixtures`),
+      h('p.small.muted', 'No fixtures scheduled yet.'));
+  }
+
+  const benchIDs = new Set(squad.bench.map((player) => player.id));
+  const players = state.showBenchFixtures ? [...squad.starting, ...squad.bench] : squad.starting;
+
+  return h('div.card.stack',
+    h('div.row.wrap',
+      h('h3', `Next ${count} fixtures`),
+      h('span.spacer'),
+      h('button.btn.btn-sm.btn-ghost', {
+        type: 'button',
+        onclick: () => { state.showBenchFixtures = !state.showBenchFixtures; render(); },
+      }, state.showBenchFixtures ? 'XI only' : 'Show bench')),
+
+    h('div.ticker',
+      h('div.ticker-row.head',
+        h('span', ''),
+        h('span.fx-run', gameweeks.map((gameweek) => h('span.gw', `GW${gameweek}`)))),
+      players.map((player) => h('div.ticker-row', {
+        class: benchIDs.has(player.id) ? 'benched' : null,
+      },
+      h('span.who',
+        h('span.n', player.element.web_name),
+        h('span.c', player.team.short_name)),
+      fixtureRun(planner.next(count, player.element.team), { compact: true })))),
+
+    fixtureLegend());
 }
 
 function bestChipCard() {
@@ -657,24 +713,63 @@ function renderTransfers() {
   }
 
   const plan = state.transferPlan;
-  if (!plan) return notice('info', 'No plan yet.');
+  const planner = state.transferPlanner;
+  if (!plan || !planner) return notice('info', 'No plan yet.');
 
-  const moveNode = (move, { swappable } = {}) => h('div.stack',
-    h('div.move',
-      h('div.side',
-        h('div.n', move.outgoing.element.web_name),
-        h('div.d', `${move.outgoing.team.short_name} · ${formatPrice(move.outgoing.priceTenths)} · ${move.outgoing.projected.toFixed(1)} pts`)),
-      h('div.arrow', '→'),
-      h('div.side.in',
-        h('div.n', move.incoming.element.web_name),
-        h('div.d', `${move.incoming.team.short_name} · ${formatPrice(move.incoming.priceTenths)} · ${move.incoming.projected.toFixed(1)} pts`))),
-    h('div.row.wrap',
-      pill(`+${move.gain.toFixed(1)} pts/GW`, 'accent'),
-      pill(`${move.priceDelta === 0 ? 'Same price' : move.priceDelta > 0 ? `−${formatPrice(move.priceDelta)} from the bank` : `+${formatPrice(-move.priceDelta)} back`}`),
-      pill(positionShort(move.outgoing.position)),
-      swappable
-        ? h('button.btn.btn-sm', { type: 'button', onclick: () => applyMove(move) }, 'Swap')
-        : null));
+  const offered = [...plan.moves, ...plan.alternatives];
+  const chosen = () => offered.filter((move) => state.selectedMoves.has(move.id));
+
+  // The outlook panel is redrawn on its own as moves are ticked, so the page
+  // doesn't jump back to the top on every tap.
+  const outlookSlot = h('div.outlook');
+  const drawOutlook = () => mount(outlookSlot, outlookPanel(planner.outlook(chosen())));
+
+  const toggle = (move, row) => {
+    if (state.selectedMoves.has(move.id)) state.selectedMoves.delete(move.id);
+    else state.selectedMoves.add(move.id);
+    row.setAttribute('aria-pressed', state.selectedMoves.has(move.id) ? 'true' : 'false');
+    drawOutlook();
+  };
+
+  const pickRow = (move, recommended) => {
+    const row = h('button.pick-row', {
+      type: 'button',
+      'aria-pressed': state.selectedMoves.has(move.id) ? 'true' : 'false',
+    },
+    h('span.tick', '✓'),
+    h('span.body',
+      h('span.names',
+        h('span.out', move.outgoing.element.web_name),
+        ' → ',
+        h('span.in', move.incoming.element.web_name)),
+      h('span.tiny.muted', `${move.outgoing.team.short_name} ${formatPrice(move.outgoing.priceTenths)} → ${move.incoming.team.short_name} ${formatPrice(move.incoming.priceTenths)} · ${positionShort(move.outgoing.position)}`),
+      h('span.row',
+        h('span.tiny.good', { style: { fontWeight: '700', flex: 'none' } }, `+${move.gain.toFixed(1)} pts/GW`),
+        state.fixturePlanner
+          ? h('span', { style: { flex: '1', minWidth: '0', maxWidth: '150px' } },
+            fixtureRun(state.fixturePlanner.next(3, move.incoming.element.team), { compact: true }))
+          : null)),
+    recommended ? pill('Pick', 'accent') : null);
+
+    row.addEventListener('click', () => toggle(move, row));
+    return row;
+  };
+
+  const body = plan.isEmpty && !plan.alternatives.length
+    ? notice('info', 'Nothing worth doing. No single swap improves your projected points by enough to bother — holding your free transfer is the better move.')
+    : h('div.stack',
+      h('p.small.muted', "Tick the ones you'd make. The projection updates as you go."),
+      plan.moves.map((move) => pickRow(move, true)),
+      plan.alternatives.length
+        ? h('details.disclose',
+          h('summary', 'Other moves worth a look'),
+          h('div.stack', { style: { marginTop: '8px' } },
+            h('p.tiny.muted', 'Each of these is legal on its own, applied to the squad after the recommended plan.'),
+            plan.alternatives.map((move) => pickRow(move, false))))
+        : null,
+      outlookSlot);
+
+  drawOutlook();
 
   return h('div.stack',
     h('h1', 'Transfers'),
@@ -682,53 +777,61 @@ function renderTransfers() {
       tile('Free transfers', String(plan.freeTransfers)),
       tile('In the bank', formatPrice(plan.bankTenths)),
       tile('Suggested', String(plan.moves.length)),
-      tile('Points hit', plan.pointsHit ? `−${plan.pointsHit}` : '0'),
-      tile('Net gain', `${plan.netGain >= 0 ? '+' : ''}${plan.netGain.toFixed(1)}`)),
-
-    plan.isEmpty
-      ? notice('info', 'Nothing worth doing. No single swap improves your projected points by enough to bother — holding your free transfer is the better move.')
-      : h('div.stack',
-        h('h2', plan.moves.length === 1 ? 'Make this transfer' : `Make these ${plan.moves.length} transfers`),
-        plan.hits
-          ? notice('warn', `That's ${plan.hits} more than your free transfers, so it costs ${plan.pointsHit} points. Net ${plan.netGain.toFixed(1)} pts, charged against a single week — if the gain holds up over several weeks it's better than it looks.`)
-          : null,
-        plan.moves.map((move) => h('div.card', moveNode(move))),
-        h('p.small.muted', `Bank afterwards: ${formatPrice(plan.bankAfter)}.`),
-        h('button.btn.btn-primary.btn-wide', {
-          type: 'button',
-          onclick: () => plan.moves.forEach(applyMove),
-        }, 'Apply to my squad')),
-
-    plan.alternatives.length
-      ? h('div.stack',
-        h('h2', 'Other options'),
-        h('p.small.muted', 'Each of these is legal on its own, applied to the squad after the plan above.'),
-        plan.alternatives.map((move) => h('div.card', moveNode(move, { swappable: true }))))
-      : null,
-
+      tile('Alternatives', String(plan.alternatives.length))),
+    h('div.card', body),
     resourcesCard());
 }
 
-function applyMove(move) {
-  // Re-check legality: the user may have applied another swap since this plan
-  // was drawn up, which can change the club counts and the bank.
-  const planner = new TransferPlanner({
-    squad: ownedPlayers(),
-    rated: state.rated,
-    bankTenths: state.team.bankTenths,
-    freeTransfers: state.team.freeTransfers,
-    maxPerClub: state.prefs.maxPerClub,
-  });
-  if (!planner.isLegal(move, ownedPlayers(), state.team.bankTenths)) {
-    toast("That swap isn't legal any more — your squad has changed since it was suggested.");
-    withBusy('Reworking the plan…', buildSquad);
-    return;
-  }
+/** What the ticked transfers would do to the squad's projected score. */
+function outlookPanel(outlook) {
+  const figure = (label, value, tone) => h('div.outlook-figure',
+    h('div.k', label),
+    h('div.v', { class: tone || null }, value.toFixed(1)));
 
-  state.team.playerIDs = state.team.playerIDs.map((id) => (id === move.outgoing.id ? move.incoming.id : id));
-  state.team.bankTenths -= move.priceDelta;
-  save('team', state.team);
-  withBusy('Reworking the plan…', buildSquad);
+  const apply = () => {
+    const moves = outlook.applied;
+    if (!moves.length) return;
+    for (const move of moves) {
+      state.team.playerIDs = state.team.playerIDs.map((id) => (id === move.outgoing.id ? move.incoming.id : id));
+      state.team.bankTenths -= move.priceDelta;
+    }
+    save('team', state.team);
+    withBusy('Reworking the plan…', buildSquad);
+  };
+
+  return h('div.outlook',
+    h('div.outlook-top',
+      figure('Now', outlook.before),
+      h('span.arrow', '→'),
+      figure('After', outlook.after, outlook.gain >= 0 ? 'good' : 'bad-text'),
+      h('div.outlook-delta',
+        h('div.v', { class: outlook.gain >= 0 ? 'good' : 'bad-text' },
+          `${outlook.gain >= 0 ? '+' : ''}${outlook.gain.toFixed(1)}`),
+        h('div.k', 'pts / gameweek'))),
+
+    outlook.isEmpty
+      ? h('p.small.muted', "Nothing ticked — this is what you'd score as you are.")
+      : h('div.stack',
+        h('div.chips',
+          pill(`${outlook.count} transfer${outlook.count === 1 ? '' : 's'}`),
+          outlook.pointsHit > 0 ? pill(`−${outlook.pointsHit} hit`, 'warn') : pill('No hit', 'accent'),
+          pill(`net ${outlook.net >= 0 ? '+' : ''}${outlook.net.toFixed(1)}`, outlook.net >= 0 ? 'accent' : 'warn'),
+          pill(`bank ${formatPrice(outlook.bankAfter)}`)),
+
+        outlook.weeksToBreakEven
+          ? h('p.small.warn-text', { style: { color: 'var(--warn)' } },
+            `The hit pays for itself after ${outlook.weeksToBreakEven} gameweek${outlook.weeksToBreakEven === 1 ? '' : 's'} if the gain holds.`)
+          : null,
+
+        outlook.rejected.length
+          ? h('p.small', { style: { color: 'var(--warn)' } },
+            `${outlook.rejected.length} of your picks can't be made alongside the others — same player out, or it would break the ${state.prefs.maxPerClub}-per-club limit. ${outlook.rejected.map((move) => move.incoming.element.web_name).join(', ')} left out.`)
+          : null,
+
+        h('button.btn.btn-primary.btn-wide', { type: 'button', onclick: apply },
+          `Apply ${outlook.count} transfer${outlook.count === 1 ? '' : 's'}`)),
+
+    h('p.tiny.muted', 'Projected points are the best legal XI with the captain doubled, for one gameweek.'));
 }
 
 // ------------------------------------------------------------------ chips tab
@@ -1247,6 +1350,8 @@ function showPlayer(player) {
         stat('Assists', String(element.assists)),
         stat('Clean sheets', String(element.clean_sheets))),
 
+      fixtureCardFor(player),
+
       player.reasons.length
         ? h('div.card.stack', h('h3', 'Why'), h('div.chips', player.reasons.map((reason) => pill(reason))))
         : null,
@@ -1281,6 +1386,29 @@ function showPlayer(player) {
         ? h('p.tiny.muted', 'Must-haves and the blocklist only take effect in Full Control mode.')
         : null);
   });
+}
+
+/**
+ * The club's next five gameweeks. The projection already weighs fixture
+ * difficulty, but seeing the actual opponents is what makes it trustworthy.
+ */
+function fixtureCardFor(player) {
+  const planner = state.fixturePlanner;
+  if (!planner) return null;
+  const weeks = planner.next(5, player.element.team);
+  if (!weeks.length) return null;
+
+  return h('div.card.stack',
+    h('div.row.wrap',
+      h('h3', 'Next 5 fixtures'),
+      h('span.spacer'),
+      h('span.tiny.muted', player.team.short_name)),
+    h('div.ticker',
+      h('div.ticker-row.head', h('span', ''),
+        h('span.fx-run', weeks.map((week) => h('span.gw', `GW${week.gameweek}`)))),
+      h('div.ticker-row', h('span', ''), fixtureRun(weeks))),
+    h('p.small.muted', planner.summary(5, player.element.team)),
+    h('p.tiny.muted', 'Home in capitals, away in lower case. A dash is a blank gameweek.'));
 }
 
 /** Searchable, sorted, legality-filtered player list. */

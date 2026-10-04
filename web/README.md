@@ -87,6 +87,7 @@ once per browser.
 | `js/optimizer.js` | The constrained squad search. |
 | `js/transfers.js` | Transfer suggestions for a squad you already own. |
 | `js/chips.js` | When to play Bench Boost, Triple Captain, Free Hit, Wildcard. |
+| `js/fixtures.js` | The next few gameweeks per club, for the fixture ticker. |
 | `js/content.js` | Survey questions and the jargon buster. |
 | `js/ui.js` | DOM helpers and the shared components. |
 | `js/app.js` | State, screens and routing. |

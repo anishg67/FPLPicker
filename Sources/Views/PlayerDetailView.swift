@@ -37,6 +37,7 @@ struct PlayerDetailView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .card()
                         }
+                        fixtureCard
                         statsGrid
                     }
                     .padding(20)
@@ -49,6 +50,38 @@ struct PlayerDetailView: View {
         }
         .presentationDetents(editable ? [.large] : [.medium, .large])
         .presentationDragIndicator(.visible)
+    }
+
+    // MARK: - Fixtures
+
+    /// The club's next five gameweeks. The projection already weighs fixture
+    /// difficulty, but seeing the actual opponents is what makes it trustworthy.
+    @ViewBuilder
+    private var fixtureCard: some View {
+        if let planner = state.fixtures {
+            let weeks = planner.next(5, for: player.element.team)
+            if !weeks.isEmpty {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Label("Next 5 fixtures", systemImage: "calendar")
+                            .font(.headline).foregroundStyle(.white)
+                        Spacer()
+                        Text(player.team.shortName)
+                            .font(.caption.weight(.bold))
+                            .foregroundStyle(.white.opacity(0.5))
+                    }
+                    FixtureRun(weeks: weeks, showsGameweekNumbers: true)
+                    Text(planner.summary(5, for: player.element.team))
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.65))
+                    Text("Home in capitals, away in lower case. A dash is a blank gameweek.")
+                        .font(.system(size: 9))
+                        .foregroundStyle(.white.opacity(0.4))
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .card()
+            }
+        }
     }
 
     // MARK: - Editing actions

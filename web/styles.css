@@ -578,3 +578,122 @@ footer.credit {
 }
 .toast.leaving { opacity: 0; transition: opacity 0.4s ease; }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+
+/* ---------- Fixture ticker ---------- */
+
+.fx-run { display: inline-flex; gap: 3px; min-width: 0; }
+
+.fx {
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  height: 28px;
+  padding: 0 2px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fx-compact { height: 24px; font-size: 0.58rem; }
+
+.fx-key { display: inline-flex; align-items: center; gap: 4px; font-size: 0.66rem; color: var(--faint); }
+.fx-swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+/* The ticker table: a name column, then one column per gameweek. */
+.ticker { display: grid; gap: 4px; }
+.ticker-row {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+.ticker-row .who { min-width: 0; }
+.ticker-row .who .n {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ticker-row .who .c { display: block; font-size: 0.64rem; color: var(--faint); }
+.ticker-row.head .gw {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--faint);
+}
+.ticker-row.benched { opacity: 0.6; }
+
+/* ---------- Transfer outlook ---------- */
+
+.outlook {
+  border-top: 1px solid var(--hairline);
+  padding-top: 12px;
+  margin-top: 4px;
+  display: grid;
+  gap: 10px;
+}
+.outlook-top { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.outlook-figure .k {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.outlook-figure .v { font-size: 1.5rem; font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.outlook-delta { margin-left: auto; text-align: right; }
+.outlook-delta .v { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.outlook .arrow { font-size: 1.1rem; color: var(--faint); padding-bottom: 4px; }
+.good { color: var(--accent-1); }
+.bad-text { color: var(--warn); }
+
+/* A selectable transfer row. */
+.pick-row {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 11px 12px;
+  cursor: pointer;
+}
+.pick-row[aria-pressed='true'] { border-color: var(--accent-1); background: color-mix(in srgb, var(--accent-1) 9%, transparent); }
+.pick-row .tick {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--faint);
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  font-weight: 900;
+  margin-top: 2px;
+}
+.pick-row[aria-pressed='true'] .tick { background: var(--accent-1); border-color: var(--accent-1); color: #0d0218; }
+.pick-row .body { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.pick-row .names { font-size: 0.92rem; }
+.pick-row .names .out { color: var(--muted); text-decoration: line-through; }
+.pick-row .names .in { font-weight: 700; }
+
+/* An unticked row shows an empty ring, not a greyed-out tick. */
+.pick-row:not([aria-pressed='true']) .tick { color: transparent; }
+
+@media (max-width: 420px) {
+  /* Names get a narrower column so five fixture cells still fit. */
+  .ticker-row { grid-template-columns: 62px minmax(0, 1fr); gap: 6px; }
+  .ticker-row .who .n { font-size: 0.72rem; }
+  .fx-compact { font-size: 0.54rem; }
+}

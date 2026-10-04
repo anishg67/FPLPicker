@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0853FA595CC5492AEBA46768 /* GlossaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F4A2CA3BB0626CFD3FD8D2 /* GlossaryView.swift */; };
 		099ED5C624F59BD24F3CC0A7 /* TransferPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5349CB4E793E4A0410135DD /* TransferPlanner.swift */; };
+		0BCE2501ECDD9807E92BD033 /* FixtureTickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BA3210374CE814A382AD58 /* FixtureTickerView.swift */; };
+		0E5A9E294B8F305F69413BEA /* FixturePlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FDB58641B0FCAA329121C7 /* FixturePlanner.swift */; };
 		0EF93D084261C7E1E6938814 /* FPLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F125845BDEC94FF1B784C3 /* FPLService.swift */; };
 		11C5C38DB094BDC7E750BAF7 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32CE4C7F30394370E13A008 /* PreferencesView.swift */; };
 		152D242C93A1A014E92EFD85 /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */; };
@@ -42,6 +44,7 @@
 		0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
 		1A834F989A28EF529EEF093C /* FPLModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPLModels.swift; sourceTree = "<group>"; };
 		34A4C00FDAE26107096AB99C /* SquadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadView.swift; sourceTree = "<group>"; };
+		35BA3210374CE814A382AD58 /* FixtureTickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureTickerView.swift; sourceTree = "<group>"; };
 		3FE9DA24D0F9206E0AE37942 /* SquadOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadOptimizer.swift; sourceTree = "<group>"; };
 		4E83F8EAE64D2E0CD618AF9C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4FD8A943DBDE5001C7DF45D5 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 		A14D1B40D0E9508C1377C2CF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C0DC85DD6ECFFACBF91CFE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C32CE4C7F30394370E13A008 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		C5FDB58641B0FCAA329121C7 /* FixturePlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixturePlanner.swift; sourceTree = "<group>"; };
 		C68D61133D42AB3FDA30EFE4 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		CA79F3F0CF167385C35B2194 /* SavedTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTeam.swift; sourceTree = "<group>"; };
 		CA957307CF229DDED63064FE /* ChipPlanCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipPlanCard.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				00AA023C1D3820AC55B5E582 /* ChipPlanner.swift */,
+				C5FDB58641B0FCAA329121C7 /* FixturePlanner.swift */,
 				D2349FD947236EABE311FD75 /* ProjectionEngine.swift */,
 				69FBD9438029EDE14A9B2583 /* SquadEditor.swift */,
 				3FE9DA24D0F9206E0AE37942 /* SquadOptimizer.swift */,
@@ -146,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				CA957307CF229DDED63064FE /* ChipPlanCard.swift */,
+				35BA3210374CE814A382AD58 /* FixtureTickerView.swift */,
 				91F4A2CA3BB0626CFD3FD8D2 /* GlossaryView.swift */,
 				5EAA7DBBB5401210B7C8E667 /* ImportTeamView.swift */,
 				0BD1EBE03C123C6C7FC0232A /* PlayerDetailView.swift */,
@@ -237,6 +243,8 @@
 				C4D760D5A0FF0F93B361EF7F /* FPLModels.swift in Sources */,
 				588110FFBB2B608E450C7D3B /* FPLPickerApp.swift in Sources */,
 				0EF93D084261C7E1E6938814 /* FPLService.swift in Sources */,
+				0E5A9E294B8F305F69413BEA /* FixturePlanner.swift in Sources */,
+				0BCE2501ECDD9807E92BD033 /* FixtureTickerView.swift in Sources */,
 				883D8C0A4BB915C53DDE925C /* Glossary.swift in Sources */,
 				0853FA595CC5492AEBA46768 /* GlossaryView.swift in Sources */,
 				DC1353CA12DBA051AA7B4153 /* ImportTeamView.swift in Sources */,
@@ -281,7 +289,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fplpicker.app;
 				PRODUCT_NAME = "Squad XI";
 				SDKROOT = iphoneos;
@@ -374,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fplpicker.app;
 				PRODUCT_NAME = "Squad XI";
 				SDKROOT = iphoneos;

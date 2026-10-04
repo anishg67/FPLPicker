@@ -33,6 +33,42 @@ struct TransferPlan {
     }
 }
 
+/// What a set of transfers would do to the squad's projected score.
+///
+/// Expressed in the same currency as everything else on the squad screen — the
+/// best legal XI with the captain doubled — so the number before and the number
+/// after are directly comparable.
+struct TransferOutlook {
+    /// Projected points for the squad as it stands.
+    var before: Double
+    /// Projected points once the selected transfers are applied.
+    var after: Double
+    /// Transfers that would actually land, in order.
+    var applied: [TransferMove]
+    /// Transfers that were selected but turned out to be illegal alongside the
+    /// others, so they were dropped.
+    var rejected: [TransferMove]
+    var freeTransfers: Int
+    var bankBefore: Int
+    var bankAfter: Int
+
+    var count: Int { applied.count }
+    var hits: Int { max(0, count - freeTransfers) }
+    var pointsHit: Int { hits * 4 }
+    /// Raw improvement per gameweek, before any hit is charged.
+    var gain: Double { after - before }
+    /// What you actually bank this week, with the hit paid for.
+    var net: Double { gain - Double(pointsHit) }
+    var isEmpty: Bool { applied.isEmpty }
+
+    /// How many gameweeks the gain has to hold for the hit to pay for itself.
+    /// Nil when there's no hit, or when the move loses points anyway.
+    var weeksToBreakEven: Int? {
+        guard pointsHit > 0, gain > 0 else { return nil }
+        return Int((Double(pointsHit) / gain).rounded(.up))
+    }
+}
+
 /// Suggests transfers for a squad the user already owns.
 ///
 /// Works the same way the optimizer scores squads — best legal XI plus captain,
@@ -105,6 +141,54 @@ struct TransferPlanner {
             guard atClub < maxPerClub else { return false }
         }
         return true
+    }
+
+    /// Applies moves one at a time, skipping any that stops being legal once
+    /// the earlier ones have landed.
+    ///
+    /// The user ticks moves in any order, and two perfectly good suggestions can
+    /// be illegal together — both selling into the same club, or both selling
+    /// the same player. Rather than refuse the whole selection, this takes what
+    /// it can and reports what it dropped.
+    func resolve(_ moves: [TransferMove], bank: Int) -> (applied: [TransferMove],
+                                                         rejected: [TransferMove],
+                                                         squad: [RatedPlayer],
+                                                         bank: Int) {
+        var current = squad
+        var remaining = bank
+        var applied: [TransferMove] = []
+        var rejected: [TransferMove] = []
+
+        for move in moves {
+            guard isLegal(move, in: current, bank: remaining) else {
+                rejected.append(move)
+                continue
+            }
+            applied.append(move)
+            remaining -= move.priceDelta
+            current = current.map { $0.id == move.outgoing.id ? move.incoming : $0 }
+        }
+        return (applied, rejected, current, remaining)
+    }
+
+    /// Projected points — best legal XI, captain doubled — for any 15.
+    static func projectedPoints(of squad: [RatedPlayer]) -> Double {
+        let evaluation = SquadOptimizer.evaluate(squad)
+        return evaluation.startingSum + evaluation.captain.projected
+    }
+
+    /// What the squad would score with `moves` applied, and what it scores now.
+    func outlook(applying moves: [TransferMove]) -> TransferOutlook {
+        let resolved = resolve(moves, bank: bankTenths)
+        return TransferOutlook(
+            before: Self.projectedPoints(of: squad),
+            after: Self.projectedPoints(of: resolved.squad),
+            applied: resolved.applied,
+            rejected: resolved.rejected,
+            freeTransfers: freeTransfers,
+            bankBefore: bankTenths,
+            bankAfter: resolved.bank
+        )
     }
 
     private func bestMove(in squad: [RatedPlayer], bank: Int) -> TransferMove? {

@@ -260,6 +260,7 @@ Sources/
   Engine/SquadEditor.swift       validated manual transfers, subs and armband
   Engine/TransferPlanner.swift   what to change about a squad you already own
   Engine/ChipPlanner.swift       when to play each chip, or hold it
+  Engine/FixturePlanner.swift    what each club faces next, for the ticker
   ViewModels/AppState.swift   phases, persistence, editing, background builds
   Views/                      survey, jargon buster, team import, inputs, pitch,
                               player detail, transfers, saved teams, share card,
@@ -273,6 +274,7 @@ web/
   js/optimizer.js             port of SquadOptimizer.swift
   js/transfers.js             port of TransferPlanner.swift
   js/chips.js                 port of ChipPlanner.swift
+  js/fixtures.js              port of FixturePlanner.swift
   js/content.js               survey questions and the jargon buster
   js/ui.js, js/app.js         DOM helpers, state and screens
   api/fpl.js                  serverless CORS proxy for the public API
