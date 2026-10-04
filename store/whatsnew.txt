@@ -1,0 +1,15 @@
+What's New in Version 2.2
+
+Everything since the last release, in one update.
+
+SEE THE FIXTURES BEHIND THE NUMBERS
+Every player in your starting XI now shows their next five gameweeks, colour-coded by how hard each match is. Home and away are marked, and weeks with two matches or none show as themselves — so you can check the run behind a projection instead of taking it on trust.
+
+WEIGH TRANSFERS BEFORE YOU MAKE THEM
+Transfer suggestions are now a selection. Tick any combination and watch your projected points update: what you score now, what you'd score after, the cost of any points hit, and what you actually net. If a hit is involved, the app says how many weeks the gain has to hold for it to pay for itself.
+
+KNOW WHEN TO USE YOUR BOOSTS
+The app now works out whether to play or hold each of the four one-off boosts, judging each one against an ordinary week rather than a fixed points total — so it won't tell you to burn one in a quiet gameweek. Importing your team asks which you have already used.
+
+FIXES
+Transfer suggestions no longer break the three-per-club limit or offer a replacement in the wrong position. The instructions for finding your team ID point at the right tab, and the address is tappable. The app opens full screen on iPad, in either orientation.
